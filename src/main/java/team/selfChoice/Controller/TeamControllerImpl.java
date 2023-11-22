@@ -1,27 +1,34 @@
 package team.selfChoice.Controller;
 
+import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 import team.selfChoice.DTO.TeamDTO;
+import team.selfChoice.Service.TeamService;
 
 @RestController
+@AllArgsConstructor
 public class TeamControllerImpl implements TeamController{
-    @Override
-    public void postTeam(TeamDTO teamDTO) {
 
+    @Autowired
+    private final TeamService teamService;
+    @Override
+    public void postTeam(TeamDTO team) {
+        teamService.createTeam(team);
     }
 
     @Override
     public TeamDTO getTeamById(Long id) {
-        return null;
+        return teamService.getTeamById(id);
     }
 
     @Override
     public void deleteTeamById(Long id) {
-
+        teamService.deleteTeamById(id);
     }
 
     @Override
-    public void putTeamById(Long id, TeamDTO teamDTO) {
-
+    public void putTeamById(Long id, TeamDTO team) {
+        teamService.updateTeamById(id, team);
     }
 }

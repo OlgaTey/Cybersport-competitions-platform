@@ -34,6 +34,9 @@ public class TournamentService {
     public ArrayList<TeamDTO> getTeamsByTournamentId(Long tournamentId) {
         return null;
     }
+    public ArrayList<TournamentDTO> getTournaments(Integer pageSize, Integer pageNumber) {
+        return null;
+    }
 
     public void ShuffleTeams(Long tournamentId, String shuffleType) {
 

@@ -18,10 +18,10 @@ public class MatchService {
     public void updateMatchById(Long id, MatchDTO matchDTO) {
 
     }
-    public Map setResultByMatchId(Long id) {
+    public Map getResultByMatchId(Long id) {
         return null;
     }
-    public void getResultByMatchId(Long id, MatchDTO matchDTO) {
+    public void setResultByMatchId(Long id, Map result) {
 
     }
     public void createMatch(TournamentDTO tournamentDTO, ArrayList<TeamDTO> teams) {

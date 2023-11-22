@@ -1,10 +1,12 @@
 package team.selfChoice.Controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import team.selfChoice.DTO.JudgeDTO;
 import team.selfChoice.DTO.ManagerDTO;
 import team.selfChoice.DTO.TeamDTO;
 import team.selfChoice.DTO.TournamentDTO;
+import team.selfChoice.Service.TournamentService;
 
 import java.util.ArrayList;
 
@@ -23,13 +25,13 @@ public interface TournamentController {
     @PutMapping("/tournament/{tournamentId}")
     public void putTournamentById(@PathVariable Long tournamentId, @RequestBody TournamentDTO tournament);
     @GetMapping("/tournament/{tournamentId}/addTeam")
-    public TeamDTO addTeamByTournamentId(@PathVariable Long tournamentId, TeamDTO team);
+    public void addTeamByTournamentId(@PathVariable Long tournamentId, TeamDTO team);
 
     @PutMapping("/tournament/{tournamentId}/changeManager")
-    public void putManagerByTournamentId(@PathVariable Long tournamentId, @RequestBody ManagerDTO manager);
+    public void putManagerByTournamentId(@PathVariable Long tournamentId, @RequestBody Long managerId);
 
     @PostMapping("/tournament/{tournamentId}/addJudge")
-    public void addJudgeByTournamentId(@PathVariable Long tournamentId, @RequestBody JudgeDTO judge);
+    public void addJudgeByTournamentId(@PathVariable Long tournamentId, @RequestBody Long judgeId);
     @GetMapping("/tournament/{tournamentId}/teams")
     public ArrayList<TeamDTO> getTeamsByTournamentId(@PathVariable Long tournamentId);
     @GetMapping("/tournaments")

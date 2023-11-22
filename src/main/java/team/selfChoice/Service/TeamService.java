@@ -9,7 +9,7 @@ import team.selfChoice.DTO.TeamDTO;
 @AllArgsConstructor
 public class TeamService {
 
-    public ProfileDTO getTeamById(Long id) {
+    public TeamDTO getTeamById(Long id) {
         return null;
     }
     public void createTeam(TeamDTO teamDTO) {
