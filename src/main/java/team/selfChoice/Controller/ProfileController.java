@@ -6,7 +6,7 @@ import team.selfChoice.DTO.ProfileDTO;
 @RestController
 public interface ProfileController {
 
-    @PostMapping("/profileDTO")
+    @PostMapping("/profile")
     public void postProfile(@RequestBody ProfileDTO profileDTO);
 
     @GetMapping("/profile/{id}")
@@ -15,7 +15,7 @@ public interface ProfileController {
     @DeleteMapping("/profile/{id}")
     public void deleteProfileById(@PathVariable Long id);
 
-    @PutMapping("/profileDTO/{id}")
+    @PutMapping("/profile/{id}")
     public void putProfileById(@PathVariable Long id, @RequestBody ProfileDTO profileDTO);
 
 

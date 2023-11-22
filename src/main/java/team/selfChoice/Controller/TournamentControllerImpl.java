@@ -1,6 +1,9 @@
 package team.selfChoice.Controller;
 
 import org.springframework.web.bind.annotation.RestController;
+import team.selfChoice.DTO.JudgeDTO;
+import team.selfChoice.DTO.ManagerDTO;
+import team.selfChoice.DTO.TeamDTO;
 import team.selfChoice.DTO.TournamentDTO;
 
 import java.util.ArrayList;
@@ -23,8 +26,23 @@ public class TournamentControllerImpl implements TournamentController{
     }
 
     @Override
-    public void putTournamentById(Long id, TournamentDTO tournamentDTO) {
+    public void putTournamentById(Long id, TournamentDTO tournament) {
 
+    }
+
+    @Override
+    public void putManagerByTournamentId(Long tournamentId, ManagerDTO manager) {
+
+    }
+
+    @Override
+    public void addJudgeByTournamentId(Long tournamentId, JudgeDTO judge) {
+
+    }
+
+    @Override
+    public ArrayList<TeamDTO> getTeamsByTournamentId(Long tournamentId) {
+        return null;
     }
 
     @Override
