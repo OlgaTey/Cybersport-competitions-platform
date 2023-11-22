@@ -22,6 +22,8 @@ public interface TournamentController {
 
     @PutMapping("/tournament/{tournamentId}")
     public void putTournamentById(@PathVariable Long tournamentId, @RequestBody TournamentDTO tournament);
+    @GetMapping("/tournament/{tournamentId}/addTeam")
+    public TeamDTO addTeamByTournamentId(@PathVariable Long tournamentId, TeamDTO team);
 
     @PutMapping("/tournament/{tournamentId}/changeManager")
     public void putManagerByTournamentId(@PathVariable Long tournamentId, @RequestBody ManagerDTO manager);
@@ -35,5 +37,4 @@ public interface TournamentController {
             defaultValue = "5") Integer pageSize,
                                                        @RequestParam(required = false,
                                                                defaultValue = "1") Integer pageNumber);
-
 }
