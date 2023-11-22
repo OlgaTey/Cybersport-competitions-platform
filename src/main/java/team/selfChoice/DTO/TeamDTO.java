@@ -1,4 +1,4 @@
-package team.selfChoice.Models;
+package team.selfChoice.DTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,8 +7,8 @@ import java.util.ArrayList;
 
 @AllArgsConstructor
 @Data
-public class Team {
+public class TeamDTO {
     private Long id;
     private String name;
-    private ArrayList<Player> players;
+    private ArrayList<PlayerDTO> players;
 }
