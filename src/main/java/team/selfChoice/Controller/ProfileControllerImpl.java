@@ -1,17 +1,17 @@
 package team.selfChoice.Controller;
 
 import org.springframework.web.bind.annotation.RestController;
-import team.selfChoice.Models.Profile;
+import team.selfChoice.DTO.ProfileDTO;
 
 @RestController
 public class ProfileControllerImpl implements ProfileController{
     @Override
-    public void postProfile(Profile profile) {
+    public void postProfile(ProfileDTO profileDTO) {
 
     }
 
     @Override
-    public Profile getProfileById(Long id) {
+    public ProfileDTO getProfileById(Long id) {
         return null;
     }
 
@@ -21,7 +21,7 @@ public class ProfileControllerImpl implements ProfileController{
     }
 
     @Override
-    public void putProfileById(Long id, Profile profile) {
+    public void putProfileById(Long id, ProfileDTO profileDTO) {
 
     }
 }

@@ -1,17 +1,17 @@
 package team.selfChoice.Controller;
 
 import org.springframework.web.bind.annotation.RestController;
-import team.selfChoice.Models.Team;
+import team.selfChoice.DTO.TeamDTO;
 
 @RestController
 public class TeamControllerImpl implements TeamController{
     @Override
-    public void postTeam(Team team) {
+    public void postTeam(TeamDTO teamDTO) {
 
     }
 
     @Override
-    public Team getTeamById(Long id) {
+    public TeamDTO getTeamById(Long id) {
         return null;
     }
 
@@ -21,7 +21,7 @@ public class TeamControllerImpl implements TeamController{
     }
 
     @Override
-    public void putTeamById(Long id, Team team) {
+    public void putTeamById(Long id, TeamDTO teamDTO) {
 
     }
 }

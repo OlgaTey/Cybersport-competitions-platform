@@ -11,7 +11,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
-    <groupId>team.selfChoice</groupId>
+    <groupId>teamDTO.selfChoice</groupId>
     <artifactId>platformBack</artifactId>
     <version>1.0-SNAPSHOT</version>
 

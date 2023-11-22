@@ -1,15 +1,14 @@
 package team.selfChoice.Controller;
 
 import org.springframework.web.bind.annotation.*;
-import team.selfChoice.Models.Match;
-import team.selfChoice.Models.Profile;
+import team.selfChoice.DTO.MatchDTO;
 
 @RestController
 public interface matchController {
 
-    @PostMapping("/match")
-    public void postMatch(@RequestBody Match match);
+    @PostMapping("/matchDTO")
+    public void postMatch(@RequestBody MatchDTO matchDTO);
 
-    @PutMapping("/match/{id}")
-    public void putMatchById(@PathVariable Long id, @RequestBody Match match);
+    @PutMapping("/matchDTO/{id}")
+    public void putMatchById(@PathVariable Long id, @RequestBody MatchDTO matchDTO);
 }

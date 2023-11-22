@@ -1,28 +1,26 @@
 package team.selfChoice.Controller;
 
 import org.springframework.web.bind.annotation.*;
-import team.selfChoice.Models.Player;
-import team.selfChoice.Models.Tournament;
-import team.selfChoice.Models.TournamentInfo;
+import team.selfChoice.DTO.TournamentDTO;
 
 import java.util.ArrayList;
 
 @RestController
 public interface TournamentController {
 
-    @PostMapping("/tournament")
-    public void postTournament(@RequestBody Tournament tournament);
+    @PostMapping("/tournamentDTO")
+    public void postTournament(@RequestBody TournamentDTO tournamentDTO);
 
     @GetMapping("/tournament/{id}")
-    public Tournament getTournamentById(@PathVariable Long id);
+    public TournamentDTO getTournamentById(@PathVariable Long id);
 
     @DeleteMapping("/tournament/{id}")
     public void deleteTournamentById(@PathVariable Long id);
 
-    @PutMapping("/tournament/{id}")
-    public void putTournamentById(@PathVariable Long id, @RequestBody Tournament tournament);
+    @PutMapping("/tournamentDTO/{id}")
+    public void putTournamentById(@PathVariable Long id, @RequestBody TournamentDTO tournamentDTO);
 
     @GetMapping("/tournaments")
-    public ArrayList<Tournament> getLastTournaments(@RequestParam(required = false, defaultValue = "5") Integer pageSize, @RequestParam(required = false, defaultValue = "1") Integer pageNumber);
+    public ArrayList<TournamentDTO> getLastTournaments(@RequestParam(required = false, defaultValue = "5") Integer pageSize, @RequestParam(required = false, defaultValue = "1") Integer pageNumber);
 
 }

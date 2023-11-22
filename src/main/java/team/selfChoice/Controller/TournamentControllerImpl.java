@@ -1,19 +1,19 @@
 package team.selfChoice.Controller;
 
 import org.springframework.web.bind.annotation.RestController;
-import team.selfChoice.Models.Tournament;
+import team.selfChoice.DTO.TournamentDTO;
 
 import java.util.ArrayList;
 
 @RestController
 public class TournamentControllerImpl implements TournamentController{
     @Override
-    public void postTournament(Tournament tournament) {
+    public void postTournament(TournamentDTO tournamentDTO) {
 
     }
 
     @Override
-    public Tournament getTournamentById(Long id) {
+    public TournamentDTO getTournamentById(Long id) {
         return null;
     }
 
@@ -23,12 +23,12 @@ public class TournamentControllerImpl implements TournamentController{
     }
 
     @Override
-    public void putTournamentById(Long id, Tournament tournament) {
+    public void putTournamentById(Long id, TournamentDTO tournamentDTO) {
 
     }
 
     @Override
-    public ArrayList<Tournament> getLastTournaments(Integer pageSize, Integer pageNumber) {
+    public ArrayList<TournamentDTO> getLastTournaments(Integer pageSize, Integer pageNumber) {
         return null;
     }
 }
