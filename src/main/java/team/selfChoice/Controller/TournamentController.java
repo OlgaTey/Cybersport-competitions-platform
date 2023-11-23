@@ -1,12 +1,8 @@
 package team.selfChoice.Controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import team.selfChoice.DTO.JudgeDTO;
-import team.selfChoice.DTO.ManagerDTO;
 import team.selfChoice.DTO.TeamDTO;
 import team.selfChoice.DTO.TournamentDTO;
-import team.selfChoice.Service.TournamentService;
 
 import java.util.ArrayList;
 

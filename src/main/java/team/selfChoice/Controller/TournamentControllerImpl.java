@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 import team.selfChoice.DTO.TeamDTO;
 import team.selfChoice.DTO.TournamentDTO;
-import team.selfChoice.Service.TournamentService;
+import team.selfChoice.Service.MainService;
 
 import java.util.ArrayList;
 
@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class TournamentControllerImpl implements TournamentController{
 
     @Autowired
-    private final TournamentService tournamentService;
+    private final MainService tournamentService;
     @Override
     public void postTournament(TournamentDTO tournamentDTO) {
         tournamentService.createTournament(tournamentDTO);
@@ -22,7 +22,7 @@ public class TournamentControllerImpl implements TournamentController{
 
     @Override
     public TournamentDTO getTournamentById(Long tournamentId) {
-        return tournamentService.getTournamentById(tournamentId);
+        return tournamentService.getTournamentDTOById(tournamentId);
     }
 
     @Override
