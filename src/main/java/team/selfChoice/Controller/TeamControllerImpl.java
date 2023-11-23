@@ -4,14 +4,14 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 import team.selfChoice.DTO.TeamDTO;
-import team.selfChoice.Service.TeamService;
+import team.selfChoice.Service.MainService;
 
 @RestController
 @AllArgsConstructor
 public class TeamControllerImpl implements TeamController{
 
     @Autowired
-    private final TeamService teamService;
+    private final MainService teamService;
     @Override
     public void postTeam(TeamDTO team) {
         teamService.createTeam(team);
@@ -19,7 +19,7 @@ public class TeamControllerImpl implements TeamController{
 
     @Override
     public TeamDTO getTeamById(Long id) {
-        return teamService.getTeamById(id);
+        return teamService.getTeamDTOById(id);
     }
 
     @Override
