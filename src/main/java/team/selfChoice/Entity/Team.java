@@ -11,6 +11,7 @@ import java.util.Map;
 
 @Entity
 @Table(name = "Teams")
+@AllArgsConstructor
 @RequiredArgsConstructor
 @Data
 public class Team {
@@ -44,4 +45,8 @@ public class Team {
     @MapKeyColumn(name = "parametrName")
     @Column(name = "value")
     private Map<String, Double> points;
+
+    @ManyToOne
+    @JoinColumn(name = "tournamentId", nullable = false)
+    private Tournament tournament;
 }

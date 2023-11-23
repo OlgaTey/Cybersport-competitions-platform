@@ -8,6 +8,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "Matches")
+@AllArgsConstructor
 @RequiredArgsConstructor
 @Data
 public class Match {

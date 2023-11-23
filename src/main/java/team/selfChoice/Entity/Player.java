@@ -7,6 +7,7 @@ import lombok.*;
 
 @Entity
 @Table(name = "Players")
+@AllArgsConstructor
 @RequiredArgsConstructor
 @Data
 public class Player {

@@ -7,6 +7,7 @@ import lombok.*;
 
 @Entity
 @Table(name = "Referees")
+@AllArgsConstructor
 @RequiredArgsConstructor
 @Data
 public class Referee {
@@ -15,6 +16,11 @@ public class Referee {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Setter(AccessLevel.PRIVATE)
     private Long id;
+
+    @NotNull
+    @NotBlank
+    @Column(nullable = false)
+    private String nickname;
 
     @NotNull
     @NotBlank

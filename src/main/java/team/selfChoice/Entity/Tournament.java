@@ -10,6 +10,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "Tournaments")
+@AllArgsConstructor
 @RequiredArgsConstructor
 @Data
 public class Tournament {
@@ -57,4 +58,7 @@ public class Tournament {
 
     @OneToMany(mappedBy = "tournament", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<Referee> referees;
+
+    @OneToMany(mappedBy = "tournament")
+    private List<Team> participants;
 }

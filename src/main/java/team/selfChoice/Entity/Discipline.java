@@ -9,6 +9,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "Disciplines")
+@AllArgsConstructor
 @RequiredArgsConstructor
 @Data
 public class Discipline {

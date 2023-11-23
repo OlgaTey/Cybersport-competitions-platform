@@ -10,6 +10,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "Profiles")
+@AllArgsConstructor
 @RequiredArgsConstructor
 @Data
 public class Profile {
