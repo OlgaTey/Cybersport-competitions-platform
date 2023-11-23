@@ -1,5 +1,5 @@
 package team.selfChoice.DTO;
 
-public class JudgeStatDTO {
+public class RefereeStatDTO {
     private Long tournamentsNumber;
 }
