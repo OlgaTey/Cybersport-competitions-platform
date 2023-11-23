@@ -1,7 +1,10 @@
 package team.selfChoice.Controller;
 
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.web.bind.annotation.*;
 import team.selfChoice.DTO.ProfileDTO;
+
+import java.io.IOException;
 
 @RestController
 public interface ProfileController {
@@ -18,5 +21,8 @@ public interface ProfileController {
     @PutMapping("/profile/{id}")
     public void putProfileById(@PathVariable Long id, @RequestBody ProfileDTO profileDTO);
 
+
+    @GetMapping("/exportProfile/{id}")
+    public void downloadProfile(@PathVariable Long id, HttpServletResponse response) throws IOException;
 
 }
