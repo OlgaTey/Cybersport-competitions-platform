@@ -31,4 +31,5 @@ public class Match {
     @ManyToOne
     @JoinColumn(name = "tournamentId", nullable = false)
     private Tournament tournament;
+
 }
