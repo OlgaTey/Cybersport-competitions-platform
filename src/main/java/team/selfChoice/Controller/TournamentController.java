@@ -36,6 +36,7 @@ public interface TournamentController {
     @GetMapping("/tournament/{tournamentId}/teams")
     public List<TeamDTO> getTeamsByTournamentId(@PathVariable @Min(1) Long tournamentId);
     @GetMapping("/tournaments")
+
     public List<TournamentDTO> getLastTournaments();
     @GetMapping("/t/{tournamentId}")
     public void exportTournament(@PathVariable Long tournamentId, HttpServletResponse response) throws IOException;

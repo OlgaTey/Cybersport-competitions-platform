@@ -16,6 +16,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -320,6 +321,39 @@ public class ExportService {
             for (int i = 0; i < 7; i++) {
                 agreement_sheet.autoSizeColumn(i);
             }
+            // Оформление листа Сетки:
+            Sheet grid_sheet = workbook.createSheet("Сетка");
+            int team_number = teams.size();
+            ArrayList<Double> indexes = new ArrayList<Double>();
+            int h = 1;
+            while (team_number != 0) {
+                if (indexes.size() == 0) {
+                    for (int i = 0;i<team_number;i++) {
+                        grid_sheet.addMergedRegion(new CellRangeAddress(3+(i*6), 6+(i*6), h, h+1));
+                        row = grid_sheet.createRow(3+(i*6));
+                        cell = row.createCell(1);
+                        cell.setCellValue(teams.get(i).getName());
+                        cell.setCellStyle(centerStyle);
+                        if (i%2==0) indexes.add((double) (3+(i*6)));
+                        else indexes.add((double) (6+(i*6)));
+                    }
+                }
+                else {
+                    ArrayList<Double> indexes2 = new ArrayList<Double>();
+                    for (int i = 0; i < indexes.size()-1; i+=2) {
+                        int start = (int) (((indexes.get(i) + indexes.get(i+1))) / 2 - 1.5);
+                        grid_sheet.addMergedRegion(new CellRangeAddress(start, start+3, h, h+1));
+                        row = grid_sheet.createRow(start);
+                        row.createCell(1).setCellStyle(centerStyle);
+                        if (i%4==0) indexes2.add((double) (start));
+                        else indexes2.add((double) (start+3));
+                    }
+                    indexes = new ArrayList<Double>(indexes2);;
+                }
+
+                team_number /= 2;
+                h+=3;
+            }
 
 
             // Оформление листа Итого:
@@ -356,11 +390,13 @@ public class ExportService {
             row = result_sheet.createRow(6);
             row.createCell(0).setCellValue("Главный судья соревнований:");
 
+
             row = result_sheet.createRow(8);
-            row.createCell(0).setCellValue("___________________________ (подпись)");
+//            row.createCell(0).setCellValue(profileRepo.getReferenceById(managerProfileId).getName());
 
             row = result_sheet.createRow(10);
-//            row.createCell(0).setCellValue(profileRepo.getReferenceById(managerProfileId).getName());
+            row.createCell(0).setCellValue("___________________________ (подпись)");
+
 
             row = result_sheet.createRow(12);
             row.createCell(0).setCellValue("Дата составления: " + df.format(new Date()));
