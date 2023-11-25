@@ -8,7 +8,6 @@ import lombok.*;
 
 @Embeddable
 @NoArgsConstructor(force = true)
-@AllArgsConstructor
 @RequiredArgsConstructor
 @Data
 public class Manager {
