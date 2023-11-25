@@ -201,19 +201,25 @@ public class EntitiesMapper {
     public static Tournament DTOToTournament(TournamentCreateDTO dto) {
         List<Match> matches = null;
         List<Team> teams = null;
-        List<Referee> referees = dto.getRefereesId().stream().map(service::getRefereeById).toList();
+        List<Referee> referees = dto.getRefereesProfileId().stream().map(service::getRefereeById).toList();
+        Profile managerProfile = service.getProfileById(dto.getManager().getChiefId());
         Discipline discipline = service.getDisciplineByName(dto.getInfo().getDiscipline());
+        boolean isOfficial = false;
 
         if(dto.getMatchesId() != null && !dto.getMatchesId().isEmpty()) {
             matches = dto.getMatchesId().stream().map(service::getMatchById).toList();
             teams = dto.getTeamsId().stream().map(service::getTeamById).toList();
         }
 
+        if(dto.getIsOfficial() && managerProfile.getIsOfficialReferee()) {
+            isOfficial = true;
+        }
+
         Tournament tournament = new Tournament(dto.getInfo().getName(),
                 dto.getInfo().getStart_registration(),dto.getInfo().getEnd_registration(),
                 dto.getInfo().getStart_date(), dto.getInfo().getFinish_date(),
                 discipline, DTOToManager(dto.getManager()),
-                referees);
+                referees, isOfficial);
         tournament.setDescription(dto.getInfo().getDescription());
         tournament.setLocation(dto.getInfo().getDescription());
         tournament.setParticipants(teams);
@@ -225,7 +231,7 @@ public class EntitiesMapper {
     public static Tournament updateTournament(TournamentCreateDTO dto, Tournament tournament) {
         List<Match> matches = null;
         List<Team> teams = null;
-        List<Referee> referees = dto.getRefereesId().stream().map(service::getRefereeById).toList();
+        List<Referee> referees = dto.getRefereesProfileId().stream().map(service::getRefereeById).toList();
         Discipline discipline = service.getDisciplineByName(dto.getInfo().getDiscipline());
 
         if(dto.getMatchesId() != null && !dto.getMatchesId().isEmpty()) {

@@ -10,6 +10,8 @@ import team.selfChoice.DTO.TeamDTO;
 import team.selfChoice.DTO.TournamentDTO;
 import team.selfChoice.DTO.create.TeamCreateDTO;
 import team.selfChoice.DTO.create.TournamentCreateDTO;
+import team.selfChoice.Entity.*;
+import team.selfChoice.Service.ExportService;
 import team.selfChoice.Service.MainService;
 import team.selfChoice.Service.MainService.*;
 
@@ -68,8 +70,8 @@ public class TournamentControllerImpl implements TournamentController{
     }
 
     @Override
-    public List<TournamentDTO> getLastTournaments(Integer pageSize, Integer pageNumber) {
-        return tournamentService.getTournaments(pageSize, pageNumber);
+    public List<TournamentDTO> getLastTournaments() {
+        return tournamentService.getTournaments();
     }
 
     @Override

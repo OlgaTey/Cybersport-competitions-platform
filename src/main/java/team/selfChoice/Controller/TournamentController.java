@@ -1,5 +1,6 @@
 package team.selfChoice.Controller;
 
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.constraints.Min;
 import org.springframework.web.bind.annotation.*;
 import team.selfChoice.DTO.TeamDTO;
@@ -7,6 +8,7 @@ import team.selfChoice.DTO.TournamentDTO;
 import team.selfChoice.DTO.create.TeamCreateDTO;
 import team.selfChoice.DTO.create.TournamentCreateDTO;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -34,10 +36,7 @@ public interface TournamentController {
     @GetMapping("/tournament/{tournamentId}/teams")
     public List<TeamDTO> getTeamsByTournamentId(@PathVariable @Min(1) Long tournamentId);
     @GetMapping("/tournaments")
-    public List<TournamentDTO> getLastTournaments(@RequestParam(required = false,
-            defaultValue = "5") Integer pageSize,
-                                                       @RequestParam(required = false,
-                                                               defaultValue = "1") Integer pageNumber);
+    public List<TournamentDTO> getLastTournaments();
     @GetMapping("/t/{tournamentId}")
     public void exportTournament(@PathVariable Long tournamentId, HttpServletResponse response) throws IOException;
 }

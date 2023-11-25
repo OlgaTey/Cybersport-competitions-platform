@@ -20,14 +20,17 @@ public class TournamentCreateDTO {
     @NonNull
     @NotNull
     private ManagerCreateDTO manager;
+
     private List<Long> teamsId;
 
     @NonNull
     @NotNull
     @NotEmpty
-    private List<Long> refereesId;
+    private List<Long> refereesProfileId;
 
     @NonNull
     @NotNull
     private TournamentInfoCreateDTO info;
+
+    private Boolean isOfficial;
 }

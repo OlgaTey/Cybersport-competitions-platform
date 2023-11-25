@@ -58,7 +58,7 @@ public class Tournament {
     @NonNull
     @NotNull
     @ManyToOne
-    @JoinColumn(name = "disciplineId", nullable = false)
+    @JoinColumn(name = "discipline_id", nullable = false)
     private Discipline discipline;
 
     @Embedded
@@ -74,4 +74,8 @@ public class Tournament {
 
     @OneToMany(mappedBy = "tournament")
     private List<Team> participants;
+
+    @NonNull
+    @NotNull
+    private Boolean isOfficial;
 }

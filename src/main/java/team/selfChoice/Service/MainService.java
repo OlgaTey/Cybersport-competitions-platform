@@ -111,6 +111,10 @@ public class MainService {
         profileRepo.deleteById(id);
     }
 
+    public void makeProfileOfficial(Long profileId) {
+        getProfileById(profileId).setIsOfficialReferee(true);
+    }
+
     public Team getTeamById(Long id) {
         return teamRepo.findById(id).orElseThrow(()
                 ->
@@ -199,8 +203,12 @@ public class MainService {
                 stream().map(EntitiesMapper::teamToDTO).toList();
     }
 
-    public List<TournamentDTO> getTournaments(Integer pageSize, Integer pageNumber) {
-        return null;
+    public List<TournamentDTO> getTournaments() {
+        return tournamentRepo.findAll().stream().map(EntitiesMapper::tournamentToDTO).toList();
+    }
+
+    public List<TournamentDTO> getTournaments(Boolean isOfficial) {
+        return tournamentRepo.findAllByIsOfficialOrderById(isOfficial).stream().map(EntitiesMapper::tournamentToDTO).toList();
     }
 
     public void shuffleTeams(Long tournamentId, String shuffleType) {
