@@ -1,39 +1,40 @@
 package team.selfChoice.Controller;
 
-import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.constraints.Min;
 import org.springframework.web.bind.annotation.*;
 import team.selfChoice.DTO.TeamDTO;
 import team.selfChoice.DTO.TournamentDTO;
+import team.selfChoice.DTO.create.TeamCreateDTO;
+import team.selfChoice.DTO.create.TournamentCreateDTO;
 
-import java.io.IOException;
-import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 public interface TournamentController {
 
     @PostMapping("/tournament")
-    public void postTournament(@RequestBody TournamentDTO tournament);
+    public void postTournament(@RequestBody TournamentCreateDTO tournament);
 
     @GetMapping("/tournament/{tournamentId}")
-    public TournamentDTO getTournamentById(@PathVariable Long tournamentId);
+    public TournamentDTO getTournamentById(@PathVariable @Min(1) Long tournamentId);
 
     @DeleteMapping("/tournament/{tournamentId}")
-    public void deleteTournamentById(@PathVariable Long tournamentId);
+    public void deleteTournamentById(@PathVariable @Min(1) Long tournamentId);
 
     @PutMapping("/tournament/{tournamentId}")
-    public void putTournamentById(@PathVariable Long tournamentId, @RequestBody TournamentDTO tournament);
+    public void putTournamentById(@PathVariable @Min(1) Long tournamentId, @RequestBody TournamentCreateDTO tournament);
     @GetMapping("/tournament/{tournamentId}/addTeam")
-    public void addTeamByTournamentId(@PathVariable Long tournamentId, TeamDTO team);
+    public void addTeamByTournamentId(@PathVariable @Min(1) Long tournamentId, TeamCreateDTO team);
 
     @PutMapping("/tournament/{tournamentId}/changeManager")
-    public void putManagerByTournamentId(@PathVariable Long tournamentId, @RequestBody Long managerId);
+    public void putManagerByTournamentId(@PathVariable @Min(1) Long tournamentId, @RequestBody Long managerId);
 
     @PostMapping("/tournament/{tournamentId}/addJudge")
-    public void addJudgeByTournamentId(@PathVariable Long tournamentId, @RequestBody Long judgeId);
+    public void addJudgeByTournamentId(@PathVariable @Min(1) Long tournamentId, @RequestBody Long judgeId);
     @GetMapping("/tournament/{tournamentId}/teams")
-    public ArrayList<TeamDTO> getTeamsByTournamentId(@PathVariable Long tournamentId);
+    public List<TeamDTO> getTeamsByTournamentId(@PathVariable @Min(1) Long tournamentId);
     @GetMapping("/tournaments")
-    public ArrayList<TournamentDTO> getLastTournaments(@RequestParam(required = false,
+    public List<TournamentDTO> getLastTournaments(@RequestParam(required = false,
             defaultValue = "5") Integer pageSize,
                                                        @RequestParam(required = false,
                                                                defaultValue = "1") Integer pageNumber);

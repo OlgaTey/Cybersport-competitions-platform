@@ -8,8 +8,13 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import team.selfChoice.DTO.*;
+import team.selfChoice.DTO.create.MatchCreateDTO;
+import team.selfChoice.DTO.create.ProfileCreateDTO;
+import team.selfChoice.DTO.create.TeamCreateDTO;
+import team.selfChoice.DTO.create.TournamentCreateDTO;
 import team.selfChoice.Entity.*;
 import team.selfChoice.Errors.NotFoundException;
+import team.selfChoice.mapper.EntitiesMapper;
 import team.selfChoice.repository.*;
 
 import java.io.ByteArrayInputStream;
@@ -48,129 +53,178 @@ public class MainService {
     @Autowired
     private TournamentRepo tournamentRepo;
 
-
     public Match getMatchById(Long id) {
-        return matchRepo.findById(id).orElseThrow(() -> new NotFoundException("Match with id = " + id + " is not found"));
+        return matchRepo.findById(id).orElseThrow(()
+                ->
+                new NotFoundException("Match with id = " + id + " is not found"));
     }
 
     public MatchDTO getMatchDTOById(Long id) {
-        return null;
+        return EntitiesMapper.matchToDTO(getMatchById(id));
     }
 
-    public void updateMatchById(Long id, MatchDTO matchDTO) {
+    public void updateMatchById(Long id, MatchCreateDTO matchDTO) {
+        Match match = getMatchById(id);
 
+        matchRepo.save(EntitiesMapper.updateMatch(matchDTO, match));
     }
 
-    public Map getResultByMatchId(Long id) {
-        return null;
+    public Map<String, Double> getResultByTeamId(Long id) {
+        return getTeamById(id).getPoints();
     }
 
-    public void setResultByMatchId(Long id, Map result) {
-
+    public void setResultByTeamId(Long id, Map<String, Double> result) {
+        Team team = getTeamById(id);
+        team.setPoints(result);
+        teamRepo.save(team);
     }
 
-    public void createMatch(TournamentDTO tournamentDTO, ArrayList<TeamDTO> teams) {
+    public void createMatch(MatchCreateDTO dto) {
+        Match match = EntitiesMapper.DTOToMatch(dto);
 
+        matchRepo.save(match);
     }
 
     public Profile getProfileById(Long id) {
-        return null;
+        return profileRepo.findById(id).orElseThrow(()
+                ->
+                new NotFoundException("Profile with id = " + id + " is not found"));
     }
 
     public ProfileDTO getProfileDTOById(Long id) {
-        return null;
+        return EntitiesMapper.profileToDTO(getProfileById(id));
     }
 
-    public void createProfile(ProfileDTO profile) {
+    public void createProfile(ProfileCreateDTO dto) {
+        Profile profile = EntitiesMapper.DTOToProfile(dto);
 
+        profileRepo.save(profile);
     }
 
-    public void updateProfileById(Long id, ProfileDTO profile) {
+    public void updateProfileById(Long id, ProfileCreateDTO profileDTO) {
+        Profile profile = getProfileById(id);
 
+        profileRepo.save(EntitiesMapper.updateProfile(profileDTO, profile));
     }
 
     public void deleteProfileById(Long id) {
-
+        profileRepo.deleteById(id);
     }
 
     public Team getTeamById(Long id) {
-        return null;
+        return teamRepo.findById(id).orElseThrow(()
+                ->
+                new NotFoundException("Team with id = " + id + " is not found"));
     }
 
     public TeamDTO getTeamDTOById(Long id) {
-        return null;
+        return EntitiesMapper.teamToDTO(getTeamById(id));
     }
 
     public AbsoluteTeam getAbsoluteTeamById(Long id) {
-        return null;
+        return absoluteTeamRepo.findById(id).orElseThrow(()
+                -> new
+                NotFoundException("AbsoluteTeam with id = " + id + " is not found"));
     }
 
     public AbsoluteTeamDTO getAbsoluteTeamDTOById(Long id) {
-        return null;
+        return EntitiesMapper.absoluteTeamToDTO(getAbsoluteTeamById(id));
     }
 
-    public void createTeam(TeamDTO teamDTO) {
-
+    public void createTeam(TeamCreateDTO teamDTO) {
+        teamRepo.save(EntitiesMapper.DTOToTeam(teamDTO));
     }
 
-    public void updateTeamById(Long id, TeamDTO team) {
+    public void updateTeamById(Long id, TeamCreateDTO teamDTO) {
+        Team team = getTeamById(id);
 
+        teamRepo.save(EntitiesMapper.updateTeam(teamDTO, team));
     }
 
     public void deleteTeamById(Long id) {
-
+        teamRepo.deleteById(id);
     }
 
     public TournamentDTO getTournamentDTOById(Long id) {
-        return null;
+        return EntitiesMapper.tournamentToDTO(getTournamentById(id));
     }
 
     public Tournament getTournamentById(Long id) {
-        return null;
+        return tournamentRepo.findById(id).orElseThrow(()
+                ->
+                new NotFoundException("Tournament with id = " + id + " is not found"));
     }
 
-    public void createTournament(TournamentDTO tournament) {
-
+    public void createTournament(TournamentCreateDTO tournamentDTO) {
+        tournamentRepo.save(EntitiesMapper.DTOToTournament(tournamentDTO));
     }
 
-    public void updateTournamentById(Long id, TournamentDTO tournament) {
+    public void updateTournamentById(Long id, TournamentCreateDTO tournamentDTO) {
+        Tournament tournament = getTournamentById(id);
 
+        tournamentRepo.save(EntitiesMapper.updateTournament(tournamentDTO, tournament));
     }
 
     public void deleteTournamentById(Long id) {
-
+        tournamentRepo.deleteById(id);
     }
 
-    public void addTeamByTournamentId(Long tournamentId, TeamDTO tournament) {
+    public void addTeamByTournamentId(Long tournamentId, TeamCreateDTO teamDTO) {
+        Team team = EntitiesMapper.DTOToTeam(teamDTO);
+        Tournament tournament = getTournamentById(tournamentId);
 
+        team.setTournament(tournament);
+        tournament.getParticipants().add(team);
+
+        teamRepo.save(team);
+        tournamentRepo.save(tournament);
     }
 
     public void changeManagerByTournamentId(Long tournamentId, Long managerId) {
+        Tournament tournament = getTournamentById(tournamentId);
+        Referee manager = getRefereeById(managerId);
+
+        tournament.getManager().setChiefRefereeId(managerId);
+        tournament.getManager().setNickname(manager.getNickname());
+
+        tournamentRepo.save(tournament);
+    }
+
+    public void addRefereeByTournamentId(Long tournamentId, Long profileId) {
 
     }
 
-    public void addJudgeByTournamentId(Long tournamentId, Long judgeId) {
-
+    public List<TeamDTO> getTeamsByTournamentId(Long tournamentId) {
+        return getTournamentById(tournamentId).getParticipants().
+                stream().map(EntitiesMapper::teamToDTO).toList();
     }
 
-    public ArrayList<TeamDTO> getTeamsByTournamentId(Long tournamentId) {
+    public List<TournamentDTO> getTournaments(Integer pageSize, Integer pageNumber) {
         return null;
     }
 
-    public ArrayList<TournamentDTO> getTournaments(Integer pageSize, Integer pageNumber) {
-        return null;
-    }
-
-    public void ShuffleTeams(Long tournamentId, String shuffleType) {
+    public void shuffleTeams(Long tournamentId, String shuffleType) {
 
     }
 
     public Referee getRefereeById(Long id) {
-        return null;
+        return refereeRepo.findById(id).orElseThrow(()
+                ->
+                new NotFoundException("Referee with id = " + id + " is not found"));
     }
 
     public RefereeDTO getRefereeDTOById(Long id) {
-        return null;
+        return EntitiesMapper.refereeToDTO(getRefereeById(id));
+    }
+
+    public Player getPlayerById(Long id) {
+        return playerRepo.findById(id).orElseThrow(()
+                ->
+                new NotFoundException("Player with id = " + id + " is not found"));
+    }
+
+    public Discipline getDisciplineByName(String discName) {
+        return disciplineRepo.findByName(discName);
     }
 
 

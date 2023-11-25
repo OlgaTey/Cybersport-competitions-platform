@@ -10,6 +10,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "Profiles")
+@NoArgsConstructor(force = true)
 @AllArgsConstructor
 @RequiredArgsConstructor
 @Data
@@ -20,22 +21,28 @@ public class Profile {
     @Setter(AccessLevel.PRIVATE)
     private Long id;
 
+    @NonNull
     @NotNull
     @NotBlank
     @Column(nullable = false)
     private String name;
 
+    @NonNull
     @NotNull
     @NotBlank
     @Column(nullable = false)
     private String nickname;
 
+    @NonNull
     @NotNull
     @Column(nullable = false)
     private Date birthday;
 
-    private boolean isMale;
+    @NonNull
+    @NotNull
+    private Boolean isMale;
 
+    @NonNull
     @NotNull
     @NotBlank
     @Column(nullable = false)

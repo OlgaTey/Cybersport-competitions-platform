@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 import team.selfChoice.DTO.TeamDTO;
+import team.selfChoice.DTO.create.TeamCreateDTO;
 import team.selfChoice.Service.MainService;
 
 @RestController
@@ -13,7 +14,7 @@ public class TeamControllerImpl implements TeamController{
     @Autowired
     private final MainService teamService;
     @Override
-    public void postTeam(TeamDTO team) {
+    public void postTeam(TeamCreateDTO team) {
         teamService.createTeam(team);
     }
 
@@ -28,7 +29,7 @@ public class TeamControllerImpl implements TeamController{
     }
 
     @Override
-    public void putTeamById(Long id, TeamDTO team) {
+    public void putTeamById(Long id, TeamCreateDTO team) {
         teamService.updateTeamById(id, team);
     }
 }

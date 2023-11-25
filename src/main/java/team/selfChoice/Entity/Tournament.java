@@ -2,6 +2,7 @@ package team.selfChoice.Entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
@@ -10,6 +11,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "Tournaments")
+@NoArgsConstructor(force = true)
 @AllArgsConstructor
 @RequiredArgsConstructor
 @Data
@@ -23,23 +25,28 @@ public class Tournament {
     @OneToMany(mappedBy = "tournament", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<Match> matches;
 
+    @NonNull
     @NotNull
     @NotBlank
     @Column(nullable = false)
     private String name;
 
+    @NonNull
     @NotNull
     @Column(nullable = false)
     private Date startRegistration;
 
+    @NonNull
     @NotNull
     @Column(nullable = false)
     private Date endRegistration;
 
+    @NonNull
     @NotNull
     @Column(nullable = false)
     private Date startDate;
 
+    @NonNull
     @NotNull
     @Column(nullable = false)
     private Date endDate;
@@ -48,14 +55,20 @@ public class Tournament {
 
     private String location;
 
+    @NonNull
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "disciplineId", nullable = false)
     private Discipline discipline;
 
     @Embedded
+    @NonNull
     @NotNull
     private Manager manager;
 
+    @NonNull
+    @NotNull
+    @NotEmpty
     @OneToMany(mappedBy = "tournament", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<Referee> referees;
 
