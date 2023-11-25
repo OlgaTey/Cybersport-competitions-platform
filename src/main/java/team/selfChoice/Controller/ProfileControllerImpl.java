@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 import team.selfChoice.DTO.ProfileDTO;
+import team.selfChoice.DTO.create.ProfileCreateDTO;
 import team.selfChoice.Service.MainService;
 
 @RestController
@@ -12,7 +13,7 @@ public class ProfileControllerImpl implements ProfileController{
     @Autowired
     private final MainService profileService;
     @Override
-    public void postProfile(ProfileDTO profile) {
+    public void postProfile(ProfileCreateDTO profile) {
         profileService.createProfile(profile);
     }
 
@@ -27,7 +28,7 @@ public class ProfileControllerImpl implements ProfileController{
     }
 
     @Override
-    public void putProfileById(Long id, ProfileDTO profile) {
+    public void putProfileById(Long id, ProfileCreateDTO profile) {
         profileService.updateProfileById(id, profile);
     }
 }

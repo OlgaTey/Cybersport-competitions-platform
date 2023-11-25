@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 import team.selfChoice.DTO.MatchDTO;
+import team.selfChoice.DTO.create.MatchCreateDTO;
 import team.selfChoice.Service.MainService;
 
 import java.util.Map;
@@ -20,18 +21,17 @@ public class matchControllerImpl implements matchController{
     }
 
     @Override
-    public void putMatchById(Long id, MatchDTO match) {
+    public void putMatchById(Long id, MatchCreateDTO match) {
         mainService.updateMatchById(id, match);
     }
 
     @Override
-    public Map getResultByMatchById(Long id) {
-        return mainService.getResultByMatchId(id);
+    public Map<String, Double> getResultByMatchById(Long id) {
+        return mainService.getResultByTeamId(id);
     }
 
     @Override
-    public void putResultByMatchById(Long id, Map result) {
-        mainService.setResultByMatchId(id, result);
-
+    public void putResultByMatchById(Long id, Map<String, Double> result) {
+        mainService.setResultByTeamId(id, result);
     }
 }

@@ -3,12 +3,13 @@ package team.selfChoice.Controller;
 import jakarta.validation.constraints.Min;
 import org.springframework.web.bind.annotation.*;
 import team.selfChoice.DTO.ProfileDTO;
+import team.selfChoice.DTO.create.ProfileCreateDTO;
 
 @RestController
 public interface ProfileController {
 
     @PostMapping("/profile")
-    public void postProfile(@RequestBody ProfileDTO profileDTO);
+    public void postProfile(@RequestBody ProfileCreateDTO profileDTO);
 
     @GetMapping("/profile/{id}")
     public ProfileDTO getProfileById(@PathVariable @Min(1) Long id);
@@ -17,7 +18,7 @@ public interface ProfileController {
     public void deleteProfileById(@PathVariable @Min(1) Long id);
 
     @PutMapping("/profile/{id}")
-    public void putProfileById(@PathVariable @Min(1) Long id, @RequestBody ProfileDTO profileDTO);
+    public void putProfileById(@PathVariable @Min(1) Long id, @RequestBody ProfileCreateDTO profileDTO);
 
 
 }

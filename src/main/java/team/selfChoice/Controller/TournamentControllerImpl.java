@@ -5,9 +5,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 import team.selfChoice.DTO.TeamDTO;
 import team.selfChoice.DTO.TournamentDTO;
+import team.selfChoice.DTO.create.TeamCreateDTO;
+import team.selfChoice.DTO.create.TournamentCreateDTO;
 import team.selfChoice.Service.MainService;
 
-import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @AllArgsConstructor
@@ -16,7 +18,7 @@ public class TournamentControllerImpl implements TournamentController{
     @Autowired
     private final MainService tournamentService;
     @Override
-    public void postTournament(TournamentDTO tournamentDTO) {
+    public void postTournament(TournamentCreateDTO tournamentDTO) {
         tournamentService.createTournament(tournamentDTO);
     }
 
@@ -31,12 +33,12 @@ public class TournamentControllerImpl implements TournamentController{
     }
 
     @Override
-    public void putTournamentById(Long tournamentId, TournamentDTO tournament) {
+    public void putTournamentById(Long tournamentId, TournamentCreateDTO tournament) {
         tournamentService.updateTournamentById(tournamentId, tournament);
     }
 
     @Override
-    public void addTeamByTournamentId(Long tournamentId, TeamDTO team) {
+    public void addTeamByTournamentId(Long tournamentId, TeamCreateDTO team) {
         tournamentService.addTeamByTournamentId(tournamentId, team);
     }
 
@@ -47,16 +49,16 @@ public class TournamentControllerImpl implements TournamentController{
 
     @Override
     public void addJudgeByTournamentId(Long tournamentId, Long judgeId) {
-        tournamentService.addJudgeByTournamentId(tournamentId, judgeId);
+        tournamentService.addRefereeByTournamentId(tournamentId, judgeId);
     }
 
     @Override
-    public ArrayList<TeamDTO> getTeamsByTournamentId(Long tournamentId) {
+    public List<TeamDTO> getTeamsByTournamentId(Long tournamentId) {
         return tournamentService.getTeamsByTournamentId(tournamentId);
     }
 
     @Override
-    public ArrayList<TournamentDTO> getLastTournaments(Integer pageSize, Integer pageNumber) {
+    public List<TournamentDTO> getLastTournaments(Integer pageSize, Integer pageNumber) {
         return tournamentService.getTournaments(pageSize, pageNumber);
     }
 }
