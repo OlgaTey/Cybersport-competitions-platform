@@ -9,6 +9,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "Disciplines")
+@NoArgsConstructor(force = true)
 @AllArgsConstructor
 @RequiredArgsConstructor
 @Data
@@ -19,6 +20,7 @@ public class Discipline {
     @Setter(AccessLevel.PRIVATE)
     private Long id;
 
+    @NonNull
     @NotNull
     @NotBlank
     @Column(nullable = false)
