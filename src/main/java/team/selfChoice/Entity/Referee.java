@@ -24,10 +24,7 @@ public class Referee {
     @Column(nullable = false)
     private String nickname;
 
-    @NonNull
-    @NotNull
     @NotBlank
-    @Column(nullable = false)
     private String post;
 
     @NonNull
@@ -50,7 +47,7 @@ public class Referee {
     @NonNull
     @NotNull
     @ManyToOne
-    @JoinColumn(name = "tournamentId", nullable = false)
+    @JoinColumn(name = "tournament_id", nullable = false)
     private Tournament tournament;
 
     @NonNull

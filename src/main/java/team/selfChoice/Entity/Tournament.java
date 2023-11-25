@@ -68,7 +68,6 @@ public class Tournament {
 
     @NonNull
     @NotNull
-    @NotEmpty
     @OneToMany(mappedBy = "tournament", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<Referee> referees;
 

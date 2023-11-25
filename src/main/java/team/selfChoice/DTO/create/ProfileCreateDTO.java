@@ -36,6 +36,11 @@ public class ProfileCreateDTO {
     @NotBlank
     private String country;
 
+    @NonNull
+    @NotNull
+    @NotBlank
+    private String city;
+
     private Integer category;
 
     private List<Long> teamsId;

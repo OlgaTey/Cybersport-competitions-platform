@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 import team.selfChoice.DTO.TeamDTO;
 import team.selfChoice.DTO.TournamentDTO;
+import team.selfChoice.DTO.create.RefereeAddingDTO;
 import team.selfChoice.DTO.create.TeamCreateDTO;
 import team.selfChoice.DTO.create.TournamentCreateDTO;
 import team.selfChoice.Entity.*;
@@ -60,8 +61,8 @@ public class TournamentControllerImpl implements TournamentController{
     }
 
     @Override
-    public void addJudgeByTournamentId(Long tournamentId, Long judgeId) {
-        tournamentService.addRefereeByTournamentId(tournamentId, judgeId);
+    public void addJudgeByTournamentId(Long tournamentId, RefereeAddingDTO dto) {
+        tournamentService.addRefereeByTournamentId(tournamentId, dto);
     }
 
     @Override

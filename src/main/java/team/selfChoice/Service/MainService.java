@@ -8,10 +8,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import team.selfChoice.DTO.*;
-import team.selfChoice.DTO.create.MatchCreateDTO;
-import team.selfChoice.DTO.create.ProfileCreateDTO;
-import team.selfChoice.DTO.create.TeamCreateDTO;
-import team.selfChoice.DTO.create.TournamentCreateDTO;
+import team.selfChoice.DTO.create.*;
 import team.selfChoice.Entity.*;
 import team.selfChoice.Errors.NotFoundException;
 import team.selfChoice.mapper.EntitiesMapper;
@@ -53,6 +50,8 @@ public class MainService {
     @Autowired
     private TournamentRepo tournamentRepo;
 
+    private EntitiesMapper mapper = new EntitiesMapper(this);
+
     public Match getMatchById(Long id) {
         return matchRepo.findById(id).orElseThrow(()
                 ->
@@ -60,13 +59,13 @@ public class MainService {
     }
 
     public MatchDTO getMatchDTOById(Long id) {
-        return EntitiesMapper.matchToDTO(getMatchById(id));
+        return mapper.matchToDTO(getMatchById(id));
     }
 
     public void updateMatchById(Long id, MatchCreateDTO matchDTO) {
         Match match = getMatchById(id);
 
-        matchRepo.save(EntitiesMapper.updateMatch(matchDTO, match));
+        matchRepo.save(mapper.updateMatch(matchDTO, match));
     }
 
     public Map<String, Double> getResultByTeamId(Long id) {
@@ -80,7 +79,7 @@ public class MainService {
     }
 
     public void createMatch(MatchCreateDTO dto) {
-        Match match = EntitiesMapper.DTOToMatch(dto);
+        Match match = mapper.DTOToMatch(dto);
 
         matchRepo.save(match);
     }
@@ -92,11 +91,11 @@ public class MainService {
     }
 
     public ProfileDTO getProfileDTOById(Long id) {
-        return EntitiesMapper.profileToDTO(getProfileById(id));
+        return mapper.profileToDTO(getProfileById(id));
     }
 
     public void createProfile(ProfileCreateDTO dto) {
-        Profile profile = EntitiesMapper.DTOToProfile(dto);
+        Profile profile = mapper.DTOToProfile(dto);
 
         profileRepo.save(profile);
     }
@@ -104,7 +103,7 @@ public class MainService {
     public void updateProfileById(Long id, ProfileCreateDTO profileDTO) {
         Profile profile = getProfileById(id);
 
-        profileRepo.save(EntitiesMapper.updateProfile(profileDTO, profile));
+        profileRepo.save(mapper.updateProfile(profileDTO, profile));
     }
 
     public void deleteProfileById(Long id) {
@@ -122,7 +121,7 @@ public class MainService {
     }
 
     public TeamDTO getTeamDTOById(Long id) {
-        return EntitiesMapper.teamToDTO(getTeamById(id));
+        return mapper.teamToDTO(getTeamById(id));
     }
 
     public AbsoluteTeam getAbsoluteTeamById(Long id) {
@@ -132,17 +131,17 @@ public class MainService {
     }
 
     public AbsoluteTeamDTO getAbsoluteTeamDTOById(Long id) {
-        return EntitiesMapper.absoluteTeamToDTO(getAbsoluteTeamById(id));
+        return mapper.absoluteTeamToDTO(getAbsoluteTeamById(id));
     }
 
     public void createTeam(TeamCreateDTO teamDTO) {
-        teamRepo.save(EntitiesMapper.DTOToTeam(teamDTO));
+        teamRepo.save(mapper.DTOToTeam(teamDTO));
     }
 
     public void updateTeamById(Long id, TeamCreateDTO teamDTO) {
         Team team = getTeamById(id);
 
-        teamRepo.save(EntitiesMapper.updateTeam(teamDTO, team));
+        teamRepo.save(mapper.updateTeam(teamDTO, team));
     }
 
     public void deleteTeamById(Long id) {
@@ -150,7 +149,7 @@ public class MainService {
     }
 
     public TournamentDTO getTournamentDTOById(Long id) {
-        return EntitiesMapper.tournamentToDTO(getTournamentById(id));
+        return mapper.tournamentToDTO(getTournamentById(id));
     }
 
     public Tournament getTournamentById(Long id) {
@@ -160,13 +159,13 @@ public class MainService {
     }
 
     public void createTournament(TournamentCreateDTO tournamentDTO) {
-        tournamentRepo.save(EntitiesMapper.DTOToTournament(tournamentDTO));
+        tournamentRepo.save(mapper.DTOToTournament(tournamentDTO));
     }
 
     public void updateTournamentById(Long id, TournamentCreateDTO tournamentDTO) {
         Tournament tournament = getTournamentById(id);
 
-        tournamentRepo.save(EntitiesMapper.updateTournament(tournamentDTO, tournament));
+        tournamentRepo.save(mapper.updateTournament(tournamentDTO, tournament));
     }
 
     public void deleteTournamentById(Long id) {
@@ -174,7 +173,7 @@ public class MainService {
     }
 
     public void addTeamByTournamentId(Long tournamentId, TeamCreateDTO teamDTO) {
-        Team team = EntitiesMapper.DTOToTeam(teamDTO);
+        Team team = mapper.DTOToTeam(teamDTO);
         Tournament tournament = getTournamentById(tournamentId);
 
         team.setTournament(tournament);
@@ -194,21 +193,29 @@ public class MainService {
         tournamentRepo.save(tournament);
     }
 
-    public void addRefereeByTournamentId(Long tournamentId, Long profileId) {
+    public void addRefereeByTournamentId(Long tournamentId, RefereeAddingDTO dto) {
+        Tournament tournament = getTournamentById(tournamentId);
+        Referee referee = mapper.profileToReferee(getProfileById(dto.getProfileId()),
+                tournament);
+        referee.setPost(dto.getPost());
 
+        tournament.getReferees().add(referee);
+
+        refereeRepo.save(referee);
+        tournamentRepo.save(tournament);
     }
 
     public List<TeamDTO> getTeamsByTournamentId(Long tournamentId) {
         return getTournamentById(tournamentId).getParticipants().
-                stream().map(EntitiesMapper::teamToDTO).toList();
+                stream().map(mapper::teamToDTO).toList();
     }
 
     public List<TournamentDTO> getTournaments() {
-        return tournamentRepo.findAll().stream().map(EntitiesMapper::tournamentToDTO).toList();
+        return tournamentRepo.findAll().stream().map(mapper::tournamentToDTO).toList();
     }
 
     public List<TournamentDTO> getTournaments(Boolean isOfficial) {
-        return tournamentRepo.findAllByIsOfficialOrderById(isOfficial).stream().map(EntitiesMapper::tournamentToDTO).toList();
+        return tournamentRepo.findAllByIsOfficialOrderById(isOfficial).stream().map(mapper::tournamentToDTO).toList();
     }
 
     public void shuffleTeams(Long tournamentId, String shuffleType) {
@@ -222,7 +229,7 @@ public class MainService {
     }
 
     public RefereeDTO getRefereeDTOById(Long id) {
-        return EntitiesMapper.refereeToDTO(getRefereeById(id));
+        return mapper.refereeToDTO(getRefereeById(id));
     }
 
     public Player getPlayerById(Long id) {
@@ -235,5 +242,7 @@ public class MainService {
         return disciplineRepo.findByName(discName);
     }
 
-
+    public void createDiscipline(DisciplineCreateDTO dto) {
+        disciplineRepo.save(mapper.DTOToDiscipline(dto));
+    }
 }

@@ -1,24 +1,33 @@
 package team.selfChoice.mapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import team.selfChoice.DTO.*;
 import team.selfChoice.DTO.create.*;
 import team.selfChoice.Entity.*;
 import team.selfChoice.Service.MainService;
 
+import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class EntitiesMapper {
-    private static final MainService service = new MainService();
 
-    public static DisciplineDTO disciplineToDTO(Discipline pojo) {
+    @Autowired
+    private final MainService service;
+
+    public EntitiesMapper(MainService service) {
+        this.service = service;
+    }
+
+    public DisciplineDTO disciplineToDTO(Discipline pojo) {
         List<TournamentDTO> tournaments = pojo.getTournaments().stream()
-                .map(EntitiesMapper::tournamentToDTO).toList();
+                .map(this::tournamentToDTO).toList();
 
         return new DisciplineDTO(pojo.getId(), pojo.getName(), tournaments);
     }
 
-    public static Discipline DTOToDiscipline(DisciplineCreateDTO dto) {
+    public Discipline DTOToDiscipline(DisciplineCreateDTO dto) {
         List<Tournament> tournaments = null;
 
         if(dto.getTournamentsId() != null && !dto.getTournamentsId().isEmpty()) {
@@ -31,14 +40,14 @@ public class EntitiesMapper {
 
         return discipline;
     }
-    public static MatchDTO matchToDTO(Match pojo) {
+    public MatchDTO matchToDTO(Match pojo) {
         List<Long> teamsId = pojo.getParticipants().stream()
                 .map(Team::getId).toList();
 
         return new MatchDTO(pojo.getId(), teamsId, pojo.getTournament().getId());
     }
 
-    public static Match DTOToMatch(MatchCreateDTO dto) {
+    public Match DTOToMatch(MatchCreateDTO dto) {
         List<Team> teams = null;
         Tournament tournament = service.getTournamentById(dto.getTournamentId());
 
@@ -53,7 +62,7 @@ public class EntitiesMapper {
         return match;
     }
 
-    public static Match updateMatch(MatchCreateDTO dto, Match match) {
+    public Match updateMatch(MatchCreateDTO dto, Match match) {
         List<Team> teams = null;
         Tournament tournament = service.getTournamentById(dto.getTournamentId());
 
@@ -68,13 +77,13 @@ public class EntitiesMapper {
         return match;
     }
 
-    public static PlayerDTO playerToDTO(Player pojo) {
+    public PlayerDTO playerToDTO(Player pojo) {
         return new PlayerDTO(pojo.getProfileId(), pojo.getProfileId(),
                 pojo.getNickname(), pojo.getTeam().getId(),
                 pojo.getCountry());
     }
 
-    public static Player DTOToPlayer(PlayerCreateDTO dto) {
+    public Player DTOToPlayer(PlayerCreateDTO dto) {
         Team team = service.getTeamById(dto.getTeamId());
 
         return new Player(dto.getNickname(),
@@ -82,7 +91,7 @@ public class EntitiesMapper {
                 dto.getCountry());
     }
 
-    public static ProfileDTO profileToDTO(Profile pojo) {
+    public  ProfileDTO profileToDTO(Profile pojo) {
         List<Long> teamsId = pojo.getTeams().stream()
                 .map(AbsoluteTeam::getId).toList();
 
@@ -93,7 +102,7 @@ public class EntitiesMapper {
                 pojo.getDescription());
     }
 
-    public static Profile DTOToProfile(ProfileCreateDTO dto) {
+    public  Profile DTOToProfile(ProfileCreateDTO dto) {
         List<AbsoluteTeam> teams = null;
 
         if(dto.getTeamsId() != null && !dto.getTeamsId().isEmpty()) {
@@ -104,7 +113,8 @@ public class EntitiesMapper {
 
         Profile profile = new Profile(dto.getName(),
                 dto.getNickname(),dto.getBirthday(),
-                dto.getIsMale(), dto.getCountry());
+                dto.getIsMale(), dto.getCountry(),
+                dto.getCity());
         profile.setCategory(dto.getCategory());
         profile.setTeams(teams);
         profile.setContacts(dto.getContacts());
@@ -113,7 +123,7 @@ public class EntitiesMapper {
         return profile;
     }
 
-    public static Profile updateProfile(ProfileCreateDTO dto, Profile profile) {
+    public  Profile updateProfile(ProfileCreateDTO dto, Profile profile) {
         List<AbsoluteTeam> teams = null;
 
         if(dto.getTeamsId() != null && !dto.getTeamsId().isEmpty()) {
@@ -135,24 +145,24 @@ public class EntitiesMapper {
         return profile;
     }
 
-    public static RefereeDTO refereeToDTO(Referee pojo) {
+    public  RefereeDTO refereeToDTO(Referee pojo) {
         return new RefereeDTO(pojo.getId(), pojo.getProfileId(),
                 pojo.getNickname(), pojo.getPost(),
                 pojo.getCategory(), pojo.getCountry(),
                 pojo.getCity(), pojo.getTournament().getId());
     }
 
-    public static Referee DTOToReferee(RefereeCreateDTO dto) {
-        Tournament tournament = service.getTournamentById(dto.getTournamentId());
-        return new Referee(dto.getNickname(),
-                dto.getPost(), dto.getCategory(),
-                dto.getCountry(), dto.getCity(),
-                tournament, dto.getProfileId());
-    }
+//    public  Referee DTOToReferee(RefereeCreateDTO dto) {
+//        Tournament tournament = service.getTournamentById(dto.getTournamentId());
+//        return new Referee(dto.getNickname(),
+//                dto.getPost(), dto.getCategory(),
+//                dto.getCountry(), dto.getCity(),
+//                tournament, dto.getProfileId());
+//    }
 
-    public static TeamDTO teamToDTO(Team pojo) {
-        List<PlayerDTO> players = pojo.getPlayers().stream().map(EntitiesMapper::playerToDTO).toList();
-        List<MatchDTO> matches = pojo.getMatches().stream().map(EntitiesMapper::matchToDTO).toList();
+    public  TeamDTO teamToDTO(Team pojo) {
+        List<PlayerDTO> players = pojo.getPlayers().stream().map(this::playerToDTO).toList();
+        List<MatchDTO> matches = pojo.getMatches().stream().map(this::matchToDTO).toList();
 
         return new TeamDTO(pojo.getId(), pojo.getName(),
                 players, pojo.getCaptainId(),
@@ -160,7 +170,7 @@ public class EntitiesMapper {
                 pojo.getPoints(), pojo.getTournament().getId());
     }
 
-    public static Team DTOToTeam(TeamCreateDTO dto) {
+    public  Team DTOToTeam(TeamCreateDTO dto) {
         List<Player> players = dto.getPlayersId().stream().map(service::getPlayerById).toList();
         Tournament tournament = service.getTournamentById(dto.getTournamentId());
 
@@ -173,7 +183,7 @@ public class EntitiesMapper {
         return team;
     }
 
-    public static Team updateTeam(TeamCreateDTO dto, Team team) {
+    public  Team updateTeam(TeamCreateDTO dto, Team team) {
         List<Player> players = dto.getPlayersId().stream().map(service::getPlayerById).toList();
         Tournament tournament = service.getTournamentById(dto.getTournamentId());
 
@@ -187,7 +197,7 @@ public class EntitiesMapper {
         return team;
     }
 
-    public static TournamentDTO tournamentToDTO(Tournament pojo) {
+    public  TournamentDTO tournamentToDTO(Tournament pojo) {
         TournamentInfoDTO info = createInfo(pojo);
         List<Long> matchesId = pojo.getMatches().stream().map(Match::getId).toList();
         List<Long> teamsId = pojo.getParticipants().stream().map(Team::getId).toList();
@@ -198,10 +208,10 @@ public class EntitiesMapper {
                 teamsId, refereesId, info);
     }
 
-    public static Tournament DTOToTournament(TournamentCreateDTO dto) {
+    public  Tournament DTOToTournament(TournamentCreateDTO dto) {
         List<Match> matches = null;
         List<Team> teams = null;
-        List<Referee> referees = dto.getRefereesProfileId().stream().map(service::getRefereeById).toList();
+        List<Referee> referees = new ArrayList<>();
         Profile managerProfile = service.getProfileById(dto.getManager().getChiefId());
         Discipline discipline = service.getDisciplineByName(dto.getInfo().getDiscipline());
         boolean isOfficial = false;
@@ -224,11 +234,13 @@ public class EntitiesMapper {
         tournament.setLocation(dto.getInfo().getDescription());
         tournament.setParticipants(teams);
         tournament.setMatches(matches);
+        tournament.setReferees(dto.getRefereesProfileId().stream()
+                .map(rId -> profileToReferee(service.getProfileById(rId), tournament)).toList());
 
         return tournament;
     }
 
-    public static Tournament updateTournament(TournamentCreateDTO dto, Tournament tournament) {
+    public  Tournament updateTournament(TournamentCreateDTO dto, Tournament tournament) {
         List<Match> matches = null;
         List<Team> teams = null;
         List<Referee> referees = dto.getRefereesProfileId().stream().map(service::getRefereeById).toList();
@@ -256,7 +268,7 @@ public class EntitiesMapper {
         return tournament;
     }
 
-    private static TournamentInfoDTO createInfo(Tournament pojo) {
+    private  TournamentInfoDTO createInfo(Tournament pojo) {
         return new TournamentInfoDTO(pojo.getName(), pojo.getDescription(),
                 pojo.getStartDate(), pojo.getEndDate(),
                 disciplineToDTO(pojo.getDiscipline()),
@@ -264,15 +276,15 @@ public class EntitiesMapper {
                 pojo.getLocation());
     }
 
-    private static ManagerDTO managerToDTO(Manager pojo) {
+    private  ManagerDTO managerToDTO(Manager pojo) {
         return new ManagerDTO(pojo.getChiefRefereeId(), pojo.getNickname());
     }
 
-    private static Manager DTOToManager(ManagerCreateDTO dto) {
+    private  Manager DTOToManager(ManagerCreateDTO dto) {
         return new Manager(dto.getNickname(), dto.getChiefId());
     }
 
-    public static AbsoluteTeamDTO absoluteTeamToDTO(AbsoluteTeam pojo) {
+    public  AbsoluteTeamDTO absoluteTeamToDTO(AbsoluteTeam pojo) {
         List<Long> membersId = pojo.getMembers().stream().map(Profile::getId).toList();
 
         return new AbsoluteTeamDTO(pojo.getId(), pojo.getName(),
@@ -280,10 +292,18 @@ public class EntitiesMapper {
                 pojo.getDescription());
     }
 
-    private static AbsoluteTeam DTOToAbsoluteTeam(AbsoluteTeamCreateDTO dto) {
+    public  AbsoluteTeam DTOToAbsoluteTeam(AbsoluteTeamCreateDTO dto) {
         List<Profile> profiles = dto.getMembersId().stream().map(service::getProfileById).toList();
 
         return new AbsoluteTeam(dto.getName(), dto.getCaptainId(),
                 profiles, dto.getDescription());
+    }
+
+    public  Referee profileToReferee(Profile profile, Tournament tournament) {
+        return new Referee(profile.getNickname(),
+                profile.getCategory(),
+                profile.getCountry(), profile.getCity(),
+                tournament, profile.getId());
+
     }
 }

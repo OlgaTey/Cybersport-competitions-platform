@@ -48,6 +48,12 @@ public class Profile {
     @Column(nullable = false)
     private String country;
 
+    @NonNull
+    @NotNull
+    @NotBlank
+    @Column(nullable = false)
+    private String city;
+
     private Integer category;
 
     @ManyToMany

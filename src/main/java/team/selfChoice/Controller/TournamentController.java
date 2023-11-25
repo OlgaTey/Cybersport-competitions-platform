@@ -5,6 +5,7 @@ import jakarta.validation.constraints.Min;
 import org.springframework.web.bind.annotation.*;
 import team.selfChoice.DTO.TeamDTO;
 import team.selfChoice.DTO.TournamentDTO;
+import team.selfChoice.DTO.create.RefereeAddingDTO;
 import team.selfChoice.DTO.create.TeamCreateDTO;
 import team.selfChoice.DTO.create.TournamentCreateDTO;
 
@@ -32,11 +33,10 @@ public interface TournamentController {
     public void putManagerByTournamentId(@PathVariable @Min(1) Long tournamentId, @RequestBody Long managerId);
 
     @PostMapping("/tournament/{tournamentId}/addJudge")
-    public void addJudgeByTournamentId(@PathVariable @Min(1) Long tournamentId, @RequestBody Long judgeId);
+    public void addJudgeByTournamentId(@PathVariable @Min(1) Long tournamentId, @RequestBody RefereeAddingDTO dto);
     @GetMapping("/tournament/{tournamentId}/teams")
     public List<TeamDTO> getTeamsByTournamentId(@PathVariable @Min(1) Long tournamentId);
     @GetMapping("/tournaments")
-
     public List<TournamentDTO> getLastTournaments();
     @GetMapping("/t/{tournamentId}")
     public void exportTournament(@PathVariable Long tournamentId, HttpServletResponse response) throws IOException;
