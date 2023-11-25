@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.*;
 import team.selfChoice.DTO.ProfileDTO;
 import team.selfChoice.DTO.create.ProfileCreateDTO;
 
+import java.io.IOException;
+
 @RestController
 public interface ProfileController {
 
