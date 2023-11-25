@@ -22,7 +22,4 @@ public interface ProfileController {
     public void putProfileById(@PathVariable Long id, @RequestBody ProfileDTO profileDTO);
 
 
-    @GetMapping("/exportProfile/{id}")
-    public void downloadProfile(@PathVariable Long id, HttpServletResponse response) throws IOException;
-
 }

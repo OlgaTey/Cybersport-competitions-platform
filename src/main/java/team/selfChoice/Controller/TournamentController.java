@@ -1,9 +1,11 @@
 package team.selfChoice.Controller;
 
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.web.bind.annotation.*;
 import team.selfChoice.DTO.TeamDTO;
 import team.selfChoice.DTO.TournamentDTO;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 @RestController
@@ -35,4 +37,6 @@ public interface TournamentController {
             defaultValue = "5") Integer pageSize,
                                                        @RequestParam(required = false,
                                                                defaultValue = "1") Integer pageNumber);
+    @GetMapping("/t/{tournamentId}")
+    public void exportTournament(@PathVariable Long tournamentId, HttpServletResponse response) throws IOException;
 }

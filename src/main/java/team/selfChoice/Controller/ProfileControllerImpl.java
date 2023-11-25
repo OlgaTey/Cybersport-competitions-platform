@@ -6,7 +6,6 @@ import org.apache.poi.util.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 import team.selfChoice.DTO.ProfileDTO;
-import team.selfChoice.Excel.ExcelFileExporter;
 import team.selfChoice.Service.MainService;
 
 import java.io.ByteArrayInputStream;
@@ -35,14 +34,6 @@ public class ProfileControllerImpl implements ProfileController{
     @Override
     public void putProfileById(Long id, ProfileDTO profile) {
         profileService.updateProfileById(id, profile);
-    }
-
-    @Override
-    public void downloadProfile(Long id, HttpServletResponse response) throws IOException {
-        response.setContentType("application/octet-stream");
-        response.setHeader("Content-Disposition", "attachment; filename=customers.xlsx");
-        ByteArrayInputStream stream = ExcelFileExporter.ProfileToExcelFile(id);
-        IOUtils.copy(stream, response.getOutputStream());
     }
 
 }
