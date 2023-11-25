@@ -70,8 +70,8 @@ public class TournamentControllerImpl implements TournamentController{
     }
 
     @Override
-    public List<TournamentDTO> getLastTournaments(Integer pageSize, Integer pageNumber) {
-        return tournamentService.getTournaments(pageSize, pageNumber);
+    public List<TournamentDTO> getLastTournaments() {
+        return tournamentService.getTournaments();
     }
 
     @Override

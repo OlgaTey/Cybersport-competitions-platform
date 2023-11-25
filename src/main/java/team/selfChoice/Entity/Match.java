@@ -21,15 +21,15 @@ public class Match {
     private Long id;
 
     @ManyToMany
-    @JoinTable(name = "matchesIn",
-            joinColumns = @JoinColumn(name = "matchId", nullable = false),
-            inverseJoinColumns = @JoinColumn(name = "teamId"))
+    @JoinTable(name = "matches_in",
+            joinColumns = @JoinColumn(name = "match_id", nullable = false),
+            inverseJoinColumns = @JoinColumn(name = "team_id"))
     private List<Team> participants;
 
     @NonNull
     @NotNull
     @ManyToOne
-    @JoinColumn(name = "tournamentId", nullable = false)
+    @JoinColumn(name = "tournament_id", nullable = false)
     private Tournament tournament;
 
 }

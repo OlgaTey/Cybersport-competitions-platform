@@ -51,12 +51,14 @@ public class Profile {
     private Integer category;
 
     @ManyToMany
-    @JoinTable(name = "teemsIn",
-    joinColumns = @JoinColumn(name = "profileId", nullable = false),
-    inverseJoinColumns = @JoinColumn(name = "teamId"))
+    @JoinTable(name = "teems_in",
+    joinColumns = @JoinColumn(name = "profile_id", nullable = false),
+    inverseJoinColumns = @JoinColumn(name = "team_id"))
     private List<AbsoluteTeam> teams;
 
     private String contacts;
 
     private String description;
+
+    private Boolean isOfficialReferee;
 }
