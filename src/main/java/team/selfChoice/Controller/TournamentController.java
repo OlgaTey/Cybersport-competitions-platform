@@ -38,4 +38,6 @@ public interface TournamentController {
             defaultValue = "5") Integer pageSize,
                                                        @RequestParam(required = false,
                                                                defaultValue = "1") Integer pageNumber);
+    @GetMapping("/t/{tournamentId}")
+    public void exportTournament(@PathVariable Long tournamentId, HttpServletResponse response) throws IOException;
 }

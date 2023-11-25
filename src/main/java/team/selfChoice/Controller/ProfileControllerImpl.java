@@ -1,11 +1,16 @@
 package team.selfChoice.Controller;
 
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
+import org.apache.poi.util.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 import team.selfChoice.DTO.ProfileDTO;
 import team.selfChoice.DTO.create.ProfileCreateDTO;
 import team.selfChoice.Service.MainService;
+
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 
 @RestController
 @AllArgsConstructor
@@ -31,4 +36,5 @@ public class ProfileControllerImpl implements ProfileController{
     public void putProfileById(Long id, ProfileCreateDTO profile) {
         profileService.updateProfileById(id, profile);
     }
+
 }
