@@ -1,10 +1,9 @@
-package team.selfChoice.DTO.Shuffler;
+package team.selfChoice.Shuffler;
 
 import team.selfChoice.Entity.Match;
 import team.selfChoice.Entity.Team;
 import team.selfChoice.Entity.Tournament;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 

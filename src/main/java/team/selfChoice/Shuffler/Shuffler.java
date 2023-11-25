@@ -1,4 +1,4 @@
-package team.selfChoice.DTO.Shuffler;
+package team.selfChoice.Shuffler;
 
 import team.selfChoice.Entity.Team;
 
