@@ -160,9 +160,16 @@ public class MainService {
         tournamentRepo.deleteById(id);
     }
 
-//    public void addTeamByTournamentId(Long tournamentId, TeamCreateDTO teamDTO) {
-//
-//    }
+    public void addTeamByTournamentId(Long tournamentId, TeamCreateDTO teamDTO) {
+        Team team = EntitiesMapper.DTOToTeam(teamDTO);
+        Tournament tournament = getTournamentById(tournamentId);
+
+        team.setTournament(tournament);
+        tournament.getParticipants().add(team);
+
+        teamRepo.save(team);
+        tournamentRepo.save(tournament);
+    }
 
     public void changeManagerByTournamentId(Long tournamentId, Long managerId) {
         Tournament tournament = getTournamentById(tournamentId);
