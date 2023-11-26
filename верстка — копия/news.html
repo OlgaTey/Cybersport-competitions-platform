@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="css/style.min.css">
+    <script defer src="js/createtournaments.js"></script>
+    <style>
+        img {
+            position: relative;
+        }
+        body {
+            display: grid;
+        }
+        form {
+            display: block;
+        }
+        span a {
+            width: 25%;
+            margin: 0;
+            min-height: 20%;
+        }
+        .containerforpart {
+        width: 25%;
+        height: 300%;
+        align-items: center;
+        justify-content: center;
+        display: grid;
+        background-color: #e29303;
+        }
+        .containerforpart p, img, a {
+            text-align: center;
+        }
+        .containerforpart img {
+            margin-top: 0%;
+            width: 100%;
+        }
+        .containerforpart li {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <form class="loginForm1" height="30vh" style="float: left; position: relative;" style="text-align: justify;">
+        <img src="images/logo.png" alt="Логотип" style="height: 100;" >
+        <div style="display: flex; float: right;">
+            <span><a class="button" href="index.html"> Выход</a></span>
+            <span><a class="button" href="personalmain.html">Личный кабинет</a></span>
+            <span><a class="button" href="news.html">Новости</a></span>
+            <span><a class="button" href="abouttoutnaments.html">О турнирах</a></span>
+        </div>
+    </form>
+    
+    <div class="containerforpart" height="30vh" width: 100%; style="text-align: justify;" id="news"></div>
+    <ul class = "containerforpart">
+        <li><p style="color: aliceblue;">Quinn: «EternaLEnVy — лучший игрок в "Доту" всех времён»</p></li>
+        <li><img src="images/челик.webp" alt="Изображение" style="width: 100%;"></li>
+        <li><a href="https://www.cybersport.ru/tags/dota-2" target="_blank">Ссылка на другой сайт</a></li>
+
+    </ul>
+
+    <!-- <div style="align-items: center;
+    justify-content: center;
+display: inline-grid;" class="main" >
+        <p>Текст</p>
+        <img src="images/челик.webp" alt="Изображение" style="float: left; margin: 10px;">
+        <a href="http://www.example.com">Ссылка на другой сайт</a>
+    </div>
+    <div style="text-align: center;" class="content">
+    </div> -->
+</body>
+
+</html>

@@ -12,6 +12,7 @@ import team.selfChoice.DTO.create.TournamentCreateDTO;
 import java.io.IOException;
 import java.util.List;
 
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 public interface TournamentController {
 
@@ -38,10 +39,6 @@ public interface TournamentController {
     public List<TeamDTO> getTeamsByTournamentId(@PathVariable @Min(1) Long tournamentId);
     @GetMapping("/tournaments")
     public List<TournamentDTO> getLastTournaments();
-    @GetMapping("/tournaments/filter")
-    public List<TournamentDTO> getLastFIlteredTournaments(@RequestBody Boolean isOfficial);
-    @GetMapping("/t")
-    public void exportTournament(HttpServletResponse response) throws IOException;
-    @GetMapping("/export/{tournamentId}")
+    @GetMapping("/t/{tournamentId}")
     public void exportTournament(@PathVariable Long tournamentId, HttpServletResponse response) throws IOException;
 }

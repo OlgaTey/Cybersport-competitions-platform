@@ -5,12 +5,9 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
-import team.selfChoice.Shuffler.Matcher;
-import team.selfChoice.Shuffler.Shuffler;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 @Entity
 @Table(name = "Tournaments")
@@ -80,17 +77,4 @@ public class Tournament {
     @NonNull
     @NotNull
     private Boolean isOfficial;
-
-//    @ElementCollection
-//    @CollectionTable(name = "StageMap", joinColumns = {@JoinColumn(name = "tournament_id", referencedColumnName = "id")})
-//    @MapKeyColumn(name = "stageNumber")
-//    @Column(name = "results")
-//    private Map<Integer, List<Match>> stages;
-
-    public List<Match> generateMatches(int groupSize, int groupCount) {
-        if (groupSize == -1) groupSize = this.getParticipants().size() / groupCount;
-        return Matcher.createMatches(this, groupSize);
-    }
-
-
 }

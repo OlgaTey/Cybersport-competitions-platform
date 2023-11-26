@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="css/style.min.css">
+<style>
+    table td {
+        text-align: center;
+    }
+</style>
+</head>
+
+<body>
+    <img src="images/logo.png" alt="Логотип">
+    
+    <form class="loginForm">
+        <div><span style="float:right" ><a class="button" href="index.html"> Выход</a></span></div>
+        <div><span style="float:right"><a class="button" href="personalmain.html">Личный кабинет</a></span></div>
+        <div><span style="float:right"><a class="button" href="news.html">Новости</a></span></div>
+        <div><span style="float:right"><a class="button" href="abouttoutnaments.html">О турнирах</a></span></div>
+        <div class="container">
+            <br>
+            <h1 class="text-center">SelfChoice</h1>
+        </div>
+        <br>
+    </form>
+    <a class="button" href="createtournament.html">Создание турнира</a>
+    <!-- <div style="position: absolute; bottom: 5px; text-align: center; background-color: white">
+        Контактная информация:
+    </div> -->
+    <div class="containerforpart" id="tournaments"></div>
+    <div>
+        <table style="color: white;" >
+          <tr>
+          <th>№</th><th>Событие</th><th>Дисциплина</th><th>Дата проведения</th><th>Подробно</th><th>Экспорт</th>
+          </tr>
+          <tr>
+          <td>1</td><td>Worlds</td><td>DOTA 2</td><td>2023-11-18:2023-11-20</td><td><button></button><td><a href="http://localhost:8080/t">Экспорт</a></td>
+          </tr>
+          <tr>
+          <td>2</td><td>International</td><td>League of Legends</td><td>2023-11-10:2023-11-13</td><td><button><a href="example2.html"></a></button></td><td><a href="http://localhost:8080/t">Экспорт</a></td>
+          </tr>
+          <tr>
+          <td>3</td><td>Major Major</td><td>CS GO</td><td>2023-11-01:2023-11-02</td><td><button><a href="example3.html"></a></button></td><td><a href="http://localhost:8080/t">Экспорт</a></td>
+          </tr>
+        </table> 
+    </div>
+</body>
+
+</html>

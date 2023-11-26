@@ -3,12 +3,11 @@ package team.selfChoice.Controller;
 import jakarta.validation.constraints.Min;
 import org.springframework.web.bind.annotation.*;
 import team.selfChoice.DTO.ProfileDTO;
-import team.selfChoice.DTO.RefereeDTO;
 import team.selfChoice.DTO.create.ProfileCreateDTO;
-import team.selfChoice.Entity.Referee;
 
 import java.io.IOException;
 
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 public interface ProfileController {
 
@@ -23,8 +22,6 @@ public interface ProfileController {
 
     @PutMapping("/profile/{id}")
     public void putProfileById(@PathVariable @Min(1) Long id, @RequestBody ProfileCreateDTO profileDTO);
-    @GetMapping("/referee/{id}")
-    public RefereeDTO getRefereeById(@PathVariable @Min(1) Long id);
 
 
 }

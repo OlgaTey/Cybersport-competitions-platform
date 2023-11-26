@@ -1,13 +1,9 @@
 package team.selfChoice.Controller;
 
-import jakarta.validation.constraints.Min;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
-import team.selfChoice.DTO.AbsoluteTeamDTO;
 import team.selfChoice.DTO.TeamDTO;
-import team.selfChoice.DTO.create.AbsoluteTeamCreateDTO;
 import team.selfChoice.DTO.create.TeamCreateDTO;
 import team.selfChoice.Service.MainService;
 
@@ -36,10 +32,4 @@ public class TeamControllerImpl implements TeamController{
     public void putTeamById(Long id, TeamCreateDTO team) {
         teamService.updateTeamById(id, team);
     }
-
-    @Override
-    public AbsoluteTeamDTO getAbsoluteTeamById(@PathVariable @Min(1) Long id) {
-        return teamService.getAbsoluteTeamDTOById(id);
-    }
-
 }

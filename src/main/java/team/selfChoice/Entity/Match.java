@@ -32,16 +32,4 @@ public class Match {
     @JoinColumn(name = "tournament_id", nullable = false)
     private Tournament tournament;
 
-//    @OneToMany(mappedBy = "match", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-//    private List<Duel> duels;
-
-    @OneToMany(mappedBy = "nextMatch", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-    private List<Match> previousMatches;
-
-    @ManyToOne
-    @JoinColumn(name = "next_match_id")
-    private Match nextMatch;
-
-    @ElementCollection
-    private List<Long> adjacentMatchesId;
 }
