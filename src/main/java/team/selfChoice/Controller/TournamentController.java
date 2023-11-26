@@ -38,6 +38,10 @@ public interface TournamentController {
     public List<TeamDTO> getTeamsByTournamentId(@PathVariable @Min(1) Long tournamentId);
     @GetMapping("/tournaments")
     public List<TournamentDTO> getLastTournaments();
-    @GetMapping("/t/{tournamentId}")
+    @GetMapping("/tournaments/filter")
+    public List<TournamentDTO> getLastFIlteredTournaments(@RequestBody Boolean isOfficial);
+    @GetMapping("/t")
+    public void exportTournament(HttpServletResponse response) throws IOException;
+    @GetMapping("/export/{tournamentId}")
     public void exportTournament(@PathVariable Long tournamentId, HttpServletResponse response) throws IOException;
 }

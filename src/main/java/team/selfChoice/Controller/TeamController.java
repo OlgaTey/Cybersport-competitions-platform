@@ -2,8 +2,11 @@ package team.selfChoice.Controller;
 
 import jakarta.validation.constraints.Min;
 import org.springframework.web.bind.annotation.*;
+import team.selfChoice.DTO.AbsoluteTeamDTO;
 import team.selfChoice.DTO.TeamDTO;
+import team.selfChoice.DTO.create.AbsoluteTeamCreateDTO;
 import team.selfChoice.DTO.create.TeamCreateDTO;
+import team.selfChoice.Entity.AbsoluteTeam;
 
 @RestController
 public interface TeamController {
@@ -20,4 +23,6 @@ public interface TeamController {
     @PutMapping("/team/{id}")
     public void putTeamById(@PathVariable @Min(1) Long id, @RequestBody TeamCreateDTO teamDTO);
 
+    @GetMapping("/teamAbs/{id}")
+    public AbsoluteTeamDTO getAbsoluteTeamById(@PathVariable @Min(1) Long id);
 }

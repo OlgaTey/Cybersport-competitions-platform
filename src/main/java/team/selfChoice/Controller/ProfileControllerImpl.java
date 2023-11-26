@@ -6,6 +6,7 @@ import org.apache.poi.util.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 import team.selfChoice.DTO.ProfileDTO;
+import team.selfChoice.DTO.RefereeDTO;
 import team.selfChoice.DTO.create.ProfileCreateDTO;
 import team.selfChoice.Service.MainService;
 
@@ -36,5 +37,11 @@ public class ProfileControllerImpl implements ProfileController{
     public void putProfileById(Long id, ProfileCreateDTO profile) {
         profileService.updateProfileById(id, profile);
     }
+
+    @Override
+    public RefereeDTO getRefereeById(Long id) {
+        return profileService.getRefereeDTOById(id);
+    }
+
 
 }

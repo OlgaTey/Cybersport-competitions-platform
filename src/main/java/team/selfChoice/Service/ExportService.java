@@ -1,25 +1,21 @@
 package team.selfChoice.Service;
 
+import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.formula.functions.T;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import team.selfChoice.Entity.Player;
-import team.selfChoice.Entity.Referee;
-import team.selfChoice.Entity.Team;
-import team.selfChoice.Entity.Tournament;
+import team.selfChoice.Entity.*;
 import team.selfChoice.repository.*;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 import static java.lang.Math.min;
 
@@ -60,6 +56,12 @@ public class ExportService {
             CellStyle centerStyle = workbook.createCellStyle();
             centerStyle.setAlignment(CellStyle.ALIGN_CENTER);
             centerStyle.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
+
+            CellStyle style = workbook.createCellStyle();
+            style.setFillForegroundColor(HSSFColor.LEMON_CHIFFON.index);
+            style.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+            style.setAlignment(CellStyle.ALIGN_CENTER);
+            style.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
 
             // Оформление титульного листа:
             Sheet title_sheet = workbook.createSheet("Титульный лист");
@@ -114,7 +116,7 @@ public class ExportService {
             Long chiefId = t.getManager().getChiefRefereeId();
             Long managerProfileId = 1L;
             for (Referee i:
-                 t.getReferees()) {
+                    t.getReferees()) {
                 if (Objects.equals(i.getId(), chiefId)) {
                     managerProfileId = i.getProfileId();
                 }
@@ -325,15 +327,21 @@ public class ExportService {
             Sheet grid_sheet = workbook.createSheet("Сетка");
             int team_number = teams.size();
             ArrayList<Double> indexes = new ArrayList<Double>();
+            List<Match> matches = t.getMatches();
+            int counter = 0;
             int h = 1;
+            int level = 0;
             while (team_number != 0) {
                 if (indexes.size() == 0) {
                     for (int i = 0;i<team_number;i++) {
+//                        matches.getMatchesByLevel(level).get(i/2);
+                        String name = matches.get(i/2).getParticipants().get(i%2).getName();
                         grid_sheet.addMergedRegion(new CellRangeAddress(3+(i*6), 6+(i*6), h, h+1));
                         row = grid_sheet.createRow(3+(i*6));
                         cell = row.createCell(1);
-                        cell.setCellValue(teams.get(i).getName());
                         cell.setCellStyle(centerStyle);
+                        cell.setCellValue(name);
+                        cell.setCellStyle(style);
                         if (i%2==0) indexes.add((double) (3+(i*6)));
                         else indexes.add((double) (6+(i*6)));
                     }
@@ -341,16 +349,32 @@ public class ExportService {
                 else {
                     ArrayList<Double> indexes2 = new ArrayList<Double>();
                     for (int i = 0; i < indexes.size()-1; i+=2) {
-                        int start = (int) (((indexes.get(i) + indexes.get(i+1))) / 2 - 1.5);
-                        grid_sheet.addMergedRegion(new CellRangeAddress(start, start+3, h, h+1));
-                        row = grid_sheet.createRow(start);
-                        row.createCell(1).setCellStyle(centerStyle);
-                        if (i%4==0) indexes2.add((double) (start));
-                        else indexes2.add((double) (start+3));
+                        if (indexes.size()>2) {
+                            String name = matches.get(counter + (i / 4)).getParticipants().get((i % 4)/2).getName();
+                            int start = (int) (((indexes.get(i) + indexes.get(i + 1))) / 2 - 1.5);
+                            grid_sheet.addMergedRegion(new CellRangeAddress(start, start + 3, h, h + 1));
+                            row = grid_sheet.createRow(start);
+                            cell = row.createCell(h);
+                            cell.setCellStyle(style);
+                            cell.setCellValue(name);
+                            if (i % 4 == 0) indexes2.add((double) (start));
+                            else indexes2.add((double) (start + 3));
+                        }
+                        else {
+                            String name = matches.get(matches.size()-1).getParticipants().get(1).getName();
+                            int start = (int) (((indexes.get(i) + indexes.get(i + 1))) / 2 - 1.5);
+                            grid_sheet.addMergedRegion(new CellRangeAddress(start, start + 3, h, h + 1));
+                            row = grid_sheet.createRow(start);
+                            cell = row.createCell(h);
+                            cell.setCellStyle(style);
+                            cell.setCellValue(name);
+                        }
                     }
-                    indexes = new ArrayList<Double>(indexes2);;
-                }
+                    indexes = new ArrayList<Double>(indexes2);
+                    level++;
 
+                }
+                counter+=(team_number/2);
                 team_number /= 2;
                 h+=3;
             }

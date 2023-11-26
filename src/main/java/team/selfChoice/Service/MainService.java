@@ -218,10 +218,6 @@ public class MainService {
         return tournamentRepo.findAllByIsOfficialOrderById(isOfficial).stream().map(mapper::tournamentToDTO).toList();
     }
 
-    public void shuffleTeams(Long tournamentId, String shuffleType) {
-
-    }
-
     public Referee getRefereeById(Long id) {
         return refereeRepo.findById(id).orElseThrow(()
                 ->
