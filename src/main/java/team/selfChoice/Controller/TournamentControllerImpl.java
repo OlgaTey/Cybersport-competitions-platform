@@ -76,7 +76,18 @@ public class TournamentControllerImpl implements TournamentController{
     }
 
     @Override
+    public List<TournamentDTO> getLastFIlteredTournaments(Boolean isOfficial) {
+        return tournamentService.getTournaments(isOfficial);
+    }
+
+    @Override
     public void exportTournament(Long tournamentId, HttpServletResponse response) throws IOException {
+
+        ByteArrayInputStream stream = exportService.TournamentExport(tournamentService.getTournamentById(tournamentId));
+    }
+
+    @Override
+    public void exportTournament(HttpServletResponse response) throws IOException {
         response.setContentType("application/octet-stream");
         response.setHeader("Content-Disposition", "attachment; filename=tournament.xlsx");
         Tournament t = new Tournament();
@@ -93,12 +104,44 @@ public class TournamentControllerImpl implements TournamentController{
         refs.add(new Referee(1L, "nick", "post", 1, "ru", "Samara", t, 1L));
         t.setReferees(refs);
         List<Team> teams = new ArrayList<Team>();
-        List<Player> ps = new ArrayList<Player>();
-        teams.add(new Team(1L, "name", ps, 1L, new ArrayList<Match>(), 1, new HashMap<String, Double>(), t));
-        ps.add(new Player(1L, "nick", 1L, teams.get(0), "ru"));
-        ps.add(new Player(1L, "nick", 1L, teams.get(0), "ru"));
-        ps.add(new Player(1L, "nick", 1L, teams.get(0), "ru"));
+        for (Integer i = 1; i < 9; i++) {
+            List<Player> ps = new ArrayList<Player>();
+            teams.add(new Team(i.longValue(), String.format("team_%s", i), ps, i.longValue()*3, new ArrayList<Match>(), 9-i, new HashMap<String, Double>(), t));
+            ps.add(new Player(i.longValue()*3, String.format("name_%s", 3*i), i.longValue()*3, teams.get(i-1), "ru"));
+            ps.add(new Player(i.longValue()*3+1, String.format("name_%s", 3*i+1), i.longValue()*3+1, teams.get(i-1), "ru"));
+            ps.add(new Player(i.longValue()*3+2, String.format("name_%s", 3*i+2), i.longValue()*3+2, teams.get(i-1), "ru"));
+        }
         t.setParticipants(teams);
+        List<Match> matches = new ArrayList<Match>();
+        for (Integer i = 0; i < 4; i++) {
+            List<Team> teams_temp = new ArrayList<Team>();
+            teams_temp.add(teams.get(i*2));
+            teams_temp.add(teams.get(i*2+1));
+            Match match = new Match();
+            match.setParticipants(teams_temp);
+            match.setTournament(t);
+            matches.add(match);
+        }
+        for (int i = 0; i < 2; i++) {
+            List<Team> teams_temp = new ArrayList<Team>();
+            teams_temp.add(matches.get(i*2).getParticipants().get(1));
+            teams_temp.add(matches.get(i*2+1).getParticipants().get(1));
+            Match match = new Match();
+            match.setParticipants(teams_temp);
+            match.setTournament(t);
+            matches.add(match);
+        }
+        List<Team> teams_temp = new ArrayList<Team>();
+        teams_temp.add(matches.get(4).getParticipants().get(1));
+        teams_temp.add(matches.get(5).getParticipants().get(1));
+        Match match = new Match();
+        match.setParticipants(teams_temp);
+        match.setTournament(t);
+        matches.add(match);
+
+
+        t.setMatches(matches);
+
         ByteArrayInputStream stream = exportService.TournamentExport(t);
         IOUtils.copy(stream, response.getOutputStream());
     }
