@@ -12,5 +12,5 @@ import java.util.List;
 public class DisciplineDTO {
     private Long id;
     private String name;
-    private List<TournamentDTO> tournaments;
+    private List<Long> tournamentsId;
 }

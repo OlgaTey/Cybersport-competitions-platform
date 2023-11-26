@@ -21,10 +21,10 @@ public class EntitiesMapper {
     }
 
     public DisciplineDTO disciplineToDTO(Discipline pojo) {
-        List<TournamentDTO> tournaments = pojo.getTournaments().stream()
-                .map(this::tournamentToDTO).toList();
+        List<Long> tournamentsId = pojo.getTournaments().stream()
+                .map(Tournament::getId).toList();
 
-        return new DisciplineDTO(pojo.getId(), pojo.getName(), tournaments);
+        return new DisciplineDTO(pojo.getId(), pojo.getName(), tournamentsId);
     }
 
     public Discipline DTOToDiscipline(DisciplineCreateDTO dto) {
