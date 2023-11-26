@@ -13,7 +13,7 @@ public class Matcher {
         List<Match> matches = new LinkedList<>();
         for (int i = 0; i < groups.size(); i++) {
             for (int j = 0; j < groups.get(i).size(); j++) {
-                List<Team> teams = new LinkedList<Team>();
+                List<Team> teams = new LinkedList<>();
                 teams.add(groups.get(i).get(j));
                 Match match = new Match(t);
                 match.setParticipants(teams);

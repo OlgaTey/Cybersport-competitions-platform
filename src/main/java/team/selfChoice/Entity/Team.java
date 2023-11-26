@@ -49,14 +49,14 @@ public class Team {
     private Integer position;
 
     @ElementCollection
-    @CollectionTable(name = "TeamPointingMapping", joinColumns = {@JoinColumn(name = "teamId", referencedColumnName = "id")})
-    @MapKeyColumn(name = "parametrName")
+    @CollectionTable(name = "team_pointing_mapping", joinColumns = {@JoinColumn(name = "team_id", referencedColumnName = "id")})
+    @MapKeyColumn(name = "parametr_name")
     @Column(name = "value")
     private Map<String, Double> points;
 
     @NonNull
     @NotNull
     @ManyToOne
-    @JoinColumn(name = "tournamentId", nullable = false)
+    @JoinColumn(name = "tournament_id", nullable = false)
     private Tournament tournament;
 }
