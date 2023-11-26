@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="css/style.min.css">
+    <script defer src="js/createtournaments.js"></script>
+
+</head>
+
+<body>
+    <img src="images/logo.png" alt="Логотип">
+    
+    <form class="loginForm">
+        <div  ><span style="float:right" ><a class="button" href="index.html"> Выход</a></span></div>
+        <div><span style="float:right"><a class="button" href="personalmain.html">Личный кабинет</a></span></div>
+        <div><span style="float:right"><button class="button" id="buttonnew" type="submit">Новости</button></span></div>
+        <div><span style="float:right"><button class="button" id="buttontour" type="submit">О турнирах</button></span>
+        </div>
+        <div class="container">
+            <br>
+            <h1 class="text-center">SelfChoice</h1>
+        </div>
+        <br>
+    </form>
+    <div text-aligh:centre>
+    <form id="main"  class="create" >
+        <label><p>Организатор: </p><input id="manageridnick"></label>
+        <label><p>Судьи: </p><input id="referee"></label>
+        <label><p>Официальность (да/нет): </p><input id="isofficial"></label>
+        <label><p>Название турнира:</p><input id="infoname"></label>
+        <label><p>Начало регистрации:</p><input id="infostart_date"></label>
+        <label><p>Конец регистрации:</p><input id="infofinish_date"></label>
+        <label><p>Призовой фонд:</p><input id="infoprize_pool"> </label>
+        <label><p>Дисциплина:</p><input id="infodiscipline"></label>
+        <label><p>Начало турнира:</p><input id="infostart_registration"></label>
+        <label><p>Конец турнира:</p><input id="infoend_registration"></label>
+    </form>
+    </div>
+    <div><span><button class="button" id="createtour" type="submit">Создать турнир</button></span></div>
+    <!-- <div style="position: absolute; bottom: 5px; text-align: center; background-color: white">
+        Контактная информация:
+    </div> -->
+</body>
+
+</html>
