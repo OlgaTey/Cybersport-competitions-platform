@@ -81,11 +81,11 @@ public class Tournament {
     @NotNull
     private Boolean isOfficial;
 
-    @ElementCollection
-    @CollectionTable(name = "StageMap", joinColumns = {@JoinColumn(name = "tournament_id", referencedColumnName = "id")})
-    @MapKeyColumn(name = "stageNumber")
-    @Column(name = "results")
-    private Map<Integer, List<Match>> stages;
+//    @ElementCollection
+//    @CollectionTable(name = "StageMap", joinColumns = {@JoinColumn(name = "tournament_id", referencedColumnName = "id")})
+//    @MapKeyColumn(name = "stageNumber")
+//    @Column(name = "results")
+//    private Map<Integer, List<Match>> stages;
 
     public List<Match> generateMatches(int groupSize, int groupCount) {
         if (groupSize == -1) groupSize = this.getParticipants().size() / groupCount;
